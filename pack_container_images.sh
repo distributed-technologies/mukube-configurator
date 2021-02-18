@@ -1,5 +1,5 @@
 #!/bin/bash
-DIR=tmp/container-images/ 
+DIR=src/tmp/container-images/ 
 if [ -d "$DIR" ] 
 then
 	echo "$DIR exists" 
