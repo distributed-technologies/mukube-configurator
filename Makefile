@@ -1,3 +1,6 @@
+test:
+	./write_config.sh
+
 pack_container_images: 
 	./pack_container_images.sh
 
