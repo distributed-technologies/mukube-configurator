@@ -9,7 +9,7 @@ export APISERVER_VIP=$NODE_CONTROL_PLANE_VIP
 
 mkdir -p $1/etc/keepalived
 mkdir -p $1/etc/haproxy
-mkdir -p $1/etc/kubernetes/manifests
+mkdir -p $1/tmp/ha
 
 # Fill in check_apiserver.sh
 eval "cat <<EOF
@@ -38,13 +38,13 @@ done
 eval "cat <<EOF
 $(<templates/haproxy.yaml)
 EOF
-" > $1/etc/kubernetes/manifests/haproxy.yaml
+" > $1/tmp/ha/haproxy.yaml
 
 # Fill in keepalived.yaml
 eval "cat <<EOF
 $(<templates/keepalived.yaml)
 EOF
-" > $1/etc/kubernetes/manifests/keepalived.yaml
+" > $1/tmp/ha/keepalived.yaml
 
 export STATE=$MASTER_PROXY_STATE
 export INTERFACE=$MASTER_NETWORK_INTERFACE
