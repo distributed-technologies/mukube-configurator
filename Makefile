@@ -11,14 +11,14 @@ out/mukube_master.tar: build/tmp/container-images config-master
 	./write_config_master.sh build/master/mukube_init_config
 	./prepare_master_HA.sh build/master 
 	tar -cvf out/mukube_master.tar -C build tmp/container-images
-	tar -rf out/mukube_master.tar -C build/master/ etc
-	tar -rf out/mukube_master.tar -C build/master/ mukube_init_config
+	tar -rf out/mukube_master.tar -C build/master/ .
+	
 
 build-master: out/mukube_master.tar 
 
 out/mukube_worker.tar: config-node
 	./write_config_node.sh build/worker/mukube_init_config
-	tar -cvf out/mukube_worker.tar build/worker 
+	tar -cvf out/mukube_worker.tar -C build/worker/ . 
 
 build-worker: out/mukube_worker.tar
 

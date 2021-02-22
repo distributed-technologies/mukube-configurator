@@ -61,13 +61,16 @@ for ((i=1; i<=$ALL_MASTERS; i++)); do
         export MASTER_PROXY_STATE=BACKUP
     fi
     OUTPUT_DIR_MASTER=$OUTPUT_DIR/master/master$i
-    OUTPUT_PATH_CONF=$OUTPUT_DIR_MASTER/config.yaml
+    OUTPUT_PATH_CONF=$OUTPUT_DIR_MASTER/mukube_init_config
     mkdir $OUTPUT_DIR_MASTER -p
     ./write_config_node.sh $OUTPUT_PATH_CONF
 
     export MASTER_HOST_IP
     ./write_config_master.sh $OUTPUT_PATH_CONF
+
+    # Configure Haproxy and keepalived
+    ./prepare_master_HA.sh $OUTPUT_DIR_MASTER
 done
 
 mkdir $OUTPUT_DIR/worker
-./write_config_node.sh $OUTPUT_DIR/worker/config.yaml
+./write_config_node.sh $OUTPUT_DIR/worker/mukube_init_config
