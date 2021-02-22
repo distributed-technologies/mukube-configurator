@@ -9,7 +9,8 @@ build/tmp/container-images: requirements.txt
 out/mukube_master.tar: build/tmp/container-images config-master
 	./write_config_node.sh build/master/mukube_init_config
 	./write_config_master.sh build/master/mukube_init_config
-	tar -cvf out/mukube_master.tar build/master build/tmp/container-images
+	./prepare_master_HA.sh build/master 
+	tar -cvf out/mukube_master.tar -C build tmp/container-images -C master .* 
 
 build-master: out/mukube_master.tar 
 
