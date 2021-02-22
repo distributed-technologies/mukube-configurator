@@ -54,11 +54,14 @@ export NODE_TYPE=master
 for ((i=1; i<=$ALL_MASTERS; i++)); do
     export MASTER_HOST_IP=${HOSTS[i-1]}
     export MASTER_PROXY_PRIORITY=$(expr 101 - $i)
+    
     if [ $i = 1 ]; 
     then 
         export MASTER_PROXY_STATE=MASTER
+        export MASTER_CREATE_CLUSTER=true
     else 
         export MASTER_PROXY_STATE=BACKUP
+        export MASTER_CREATE_CLUSTER=false
     fi
     OUTPUT_DIR_MASTER=$OUTPUT_DIR/master/master$i
     OUTPUT_PATH_CONF=$OUTPUT_DIR_MASTER/mukube_init_config
