@@ -20,12 +20,12 @@ re='^[0-9]+$'
 if [ -z "$ALL_MASTERS" ]
 then
     # Default value is 3
-    echo "ALL_MASTERS not set. Defaulting to 3"
+    echo "[info] ALL_MASTERS not set. Defaulting to 3"
     ALL_MASTERS=3
 else
     if ! [[ $ALL_MASTERS =~ $re ]]
     then
-        echo "$ALL_MASTER not a number"
+        echo "[error] $ALL_MASTER not a number"
         exit 1
     fi
 fi
@@ -68,7 +68,6 @@ for ((i=1; i<=$ALL_MASTERS; i++)); do
     export MASTER_HOST_IP
     ./write_config_master.sh $OUTPUT_PATH_CONF
 done
-
 
 mkdir $OUTPUT_DIR/worker
 ./write_config_node.sh $OUTPUT_DIR/worker/config.yaml

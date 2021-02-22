@@ -1,11 +1,13 @@
 DIR=$1
 
 echo "$DIR"
-i=0
+i=1
+# Pack the master nodes
 for d in $DIR/master/*; do
-    echo $d
+    archive_path=../out/master/mukube_master$i.tar
     mkdir -p out/master/ 
-    tar -cvf out/master/mukube_master$i.tar $d build/tmp/container-images
+    #Pack the images and the whole i'th master folder
+    tar -cv archive_path $d tmp/container-images --directory build
     i=$((i + 1))
 done
 

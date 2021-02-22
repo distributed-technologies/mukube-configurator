@@ -1,2 +1,5 @@
 out/*
 build/*
+config-all
+config-master
+config-node
