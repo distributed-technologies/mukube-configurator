@@ -10,7 +10,9 @@ out/mukube_master.tar: build/tmp/container-images config-master
 	./write_config_node.sh build/master/mukube_init_config
 	./write_config_master.sh build/master/mukube_init_config
 	./prepare_master_HA.sh build/master 
-	tar -cvf out/mukube_master.tar -C build tmp/container-images -C master .* 
+	tar -cvf out/mukube_master.tar -C build tmp/container-images
+	tar -rf out/mukube_master.tar -C build/master/ etc
+	tar -rf out/mukube_master.tar -C build/master/ mukube_init_config
 
 build-master: out/mukube_master.tar 
 
