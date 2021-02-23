@@ -18,7 +18,6 @@ EOF
 " > $1/etc/keepalived/check_apiserver.sh
 
 VIP_IPS=$MASTER_VIP_CLUSTER_IPS
-APISERVER_SRC_PORT=$NODE_CONTROL_PLANE_PORT
 
 
 # Fill in haproxy.cfg 
@@ -30,7 +29,7 @@ EOF
 # MAKE HOST_IP list
 IFS=, read -ra IPS <<< "$VIP_IPS"
 for ((i=0; i<${#IPS[@]}; i++)); do
-    echo -e "\t\tserver MASTER_VIP$i ${IPS[i]}:${APISERVER_SRC_PORT} check" >> $1/etc/haproxy/haproxy.cfg
+    echo -e "\t\tserver MASTER_VIP$i ${IPS[i]}:6443 check" >> $1/etc/haproxy/haproxy.cfg
 done
 
 
