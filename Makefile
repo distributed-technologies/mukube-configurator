@@ -38,3 +38,5 @@ clear-build:
 	
 clear-out:
 	rm -rf out/*
+
+clear: clear-build clear-out
