@@ -36,13 +36,13 @@ then
     exit 1
 fi
 
-if [ -z "$ALL_HOST_IPS" ]
+if [ -z "$MASTER_VIP_CLUSTER_IPS" ]
 then
-    echo "[error] ALL_HOST_IPS required"
+    echo "[error] MASTER_VIP_CLUSTER_IPS required"
     exit 1
 fi
 # MAKE HOST_IP list
-IFS=, read -ra HOSTS <<< "$ALL_HOST_IPS"
+IFS=, read -ra HOSTS <<< "$MASTER_VIP_CLUSTER_IPS"
 
 # Export all variables for script scope
 export NODE_JOIN_TOKEN=$NODE_JOIN_TOKEN
@@ -68,11 +68,13 @@ for ((i=1; i<=$ALL_MASTERS; i++)); do
     mkdir $OUTPUT_DIR_MASTER -p
     ./write_config_node.sh $OUTPUT_PATH_CONF
 
-    export MASTER_HOST_IP
-    ./write_config_master.sh $OUTPUT_PATH_CONF
+    ./write_config_master.sh $OUTPUT_PATH_CONF config-all
 
     # Configure Haproxy and keepalived
     ./prepare_master_HA.sh $OUTPUT_DIR_MASTER
+
+    # Configure the static pod manifests for the control plane
+    ./prepare_master_control_plane.sh $OUTPUT_DIR_MASTER
 done
 
 mkdir $OUTPUT_DIR/worker

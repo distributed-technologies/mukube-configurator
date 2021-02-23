@@ -1,6 +1,8 @@
 #!/bin/bash
 CONFIG_OUTPUT_FILE=$1
-source config-master
+VARIABLES=$2
+
+source $VARIABLES
 
 if [ -z "$MASTER_TAINT" ];
 then
