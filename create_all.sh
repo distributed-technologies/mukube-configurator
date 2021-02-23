@@ -51,6 +51,9 @@ export MASTER_NETWORK_INTERFACE=$MASTER_NETWORK_INTERFACE
 export MASTER_TAINT=$MASTER_TAINT
 export NODE_TYPE=master
 
+# Get the bootscript
+./prepare_boot.sh
+
 for ((i=1; i<=$ALL_MASTERS; i++)); do
     export MASTER_HOST_IP=${HOSTS[i-1]}
     export MASTER_PROXY_PRIORITY=$(expr 101 - $i)
@@ -64,6 +67,7 @@ for ((i=1; i<=$ALL_MASTERS; i++)); do
         export MASTER_CREATE_CLUSTER=false
     fi
     OUTPUT_DIR_MASTER=$OUTPUT_DIR/master/master$i
+
     OUTPUT_PATH_CONF=$OUTPUT_DIR_MASTER/mukube_init_config
     mkdir $OUTPUT_DIR_MASTER -p
 
@@ -72,7 +76,12 @@ for ((i=1; i<=$ALL_MASTERS; i++)); do
 
     # Configure Haproxy and keepalived
     ./prepare_master_HA.sh $OUTPUT_DIR_MASTER
+
+    # Copy bootscript to folder
+    sudo cp -r /tmp/boot_script/* $OUTPUT_DIR_MASTER
+    
 done
 
 mkdir $OUTPUT_DIR/worker
 ./write_config_node.sh $OUTPUT_DIR/worker/mukube_init_config config-all
+

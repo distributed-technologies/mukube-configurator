@@ -24,7 +24,7 @@ build-worker: out/mukube_worker.tar
 
 out/all: build/tmp/container-images config-all
 	./create_all.sh build/all
-	./build_all.sh build/all 
+	./build_all.sh build/all
 
 build-all:  out/all
 	
