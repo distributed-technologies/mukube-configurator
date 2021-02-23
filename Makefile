@@ -7,7 +7,7 @@ build/tmp/container-images: requirements.txt
 	./pack_container_images.sh build/tmp/container-images
 
 out/mukube_master.tar: build/tmp/container-images config-master
-	./write_config_node.sh build/master/mukube_init_config
+	./write_config_node.sh build/master/mukube_init_config config-master
 	./write_config_master.sh build/master/mukube_init_config config-master
 	./prepare_master_HA.sh build/master 
 	tar -cvf out/mukube_master.tar -C build tmp/container-images
@@ -17,7 +17,7 @@ out/mukube_master.tar: build/tmp/container-images config-master
 build-master: out/mukube_master.tar 
 
 out/mukube_worker.tar: config-node
-	./write_config_node.sh build/worker/mukube_init_config
+	./write_config_node.sh build/worker/mukube_init_config config-node
 	tar -cvf out/mukube_worker.tar -C build/worker/ . 
 
 build-worker: out/mukube_worker.tar

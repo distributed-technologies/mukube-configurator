@@ -5,7 +5,7 @@ OUTPUT_DIR=$1
 #TODO validate with regexp
 if [ -z $MASTER_CERTIFICATE_KEY ]
 then
-    echo "[info] MASTER_CERTIFICATE_KEY not set. Generating new. "
+    echo "[info] MASTER_CERTIFICATE_KEY not set. Generating new."
     MASTER_CERTIFICATE_KEY=$(sudo kubeadm certs certificate-key)
 fi
 
@@ -13,7 +13,7 @@ fi
 if [ -z $NODE_JOIN_TOKEN ]
 then
     echo "[info] NODE_JOIN_TOKEN not set. Generating new. "
-    NODE_JOIN_TOKEN=$(sudo kubeadm token create)
+    NODE_JOIN_TOKEN=$(sudo kubeadm token generate)
 fi
 
 re='^[0-9]+$'
@@ -66,16 +66,13 @@ for ((i=1; i<=$ALL_MASTERS; i++)); do
     OUTPUT_DIR_MASTER=$OUTPUT_DIR/master/master$i
     OUTPUT_PATH_CONF=$OUTPUT_DIR_MASTER/mukube_init_config
     mkdir $OUTPUT_DIR_MASTER -p
-    ./write_config_node.sh $OUTPUT_PATH_CONF
 
+    ./write_config_node.sh $OUTPUT_PATH_CONF config-all
     ./write_config_master.sh $OUTPUT_PATH_CONF config-all
 
     # Configure Haproxy and keepalived
     ./prepare_master_HA.sh $OUTPUT_DIR_MASTER
-
-    # Configure the static pod manifests for the control plane
-    ./prepare_master_control_plane.sh $OUTPUT_DIR_MASTER
 done
 
 mkdir $OUTPUT_DIR/worker
-./write_config_node.sh $OUTPUT_DIR/worker/mukube_init_config
+./write_config_node.sh $OUTPUT_DIR/worker/mukube_init_config config-all

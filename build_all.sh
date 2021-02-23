@@ -11,4 +11,5 @@ for d in $DIR/master/*; do
     i=$((i + 1))
 done
 
+# Pack the one tar for all workre nodes
 tar -cvf out/all/mukube_worker.tar -C build/worker .

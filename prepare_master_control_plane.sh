@@ -4,6 +4,8 @@ WORK_DIR=$1
 source $WORK_DIR/mukube_init_config
 
 mkdir $WORK_DIR/var/lib/etcd -p 
+# TODO GENERATE AND USE A KUBEADM CONF FILE
+# https://unofficial-kubernetes.readthedocs.io/en/latest/admin/kubeadm/#config-file
 
 echo "\n\n CONFIGURING $MASTER_HOST_IP \n\n"
 
@@ -38,7 +40,6 @@ sudo kubeadm init phase etcd local
 
 # mv all kubernetes folders to workdir
 sudo mv /etc/kubernetes $WORK_DIR/etc/
-
 
 # TODO remove when groups are working
 sudo chmod 777 -R $WORK_DIR

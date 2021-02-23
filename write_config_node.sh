@@ -1,6 +1,6 @@
 #!/bin/bash
 CONFIG_OUTPUT_FILE=$1
-source config-node
+source $2
 
 if [ -z "$NODE_CONTROL_PLANE_VIP" ]
 then
