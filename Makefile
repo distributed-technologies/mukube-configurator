@@ -6,18 +6,22 @@ build/tmp/container-images: requirements.txt
 	rm -rf build/tmp/container-images
 	./pack_container_images.sh build/tmp/container-images
 
-out/mukube_master.tar: build/tmp/container-images config-master
+out/mukube_master.tar: build/tmp/container-images /tmp/boot_script/ config-master
 	./write_config_node.sh build/master/mukube_init_config config-master
 	./write_config_master.sh build/master/mukube_init_config config-master
-	./prepare_master_HA.sh build/master 
+	./prepare_master_HA.sh build/master
+	./prepare_boot.sh
+	sudo cp -r /tmp/boot_script/* build/master
 	tar -cvf out/mukube_master.tar -C build tmp/container-images
 	tar -rf out/mukube_master.tar -C build/master/ .
 	
 
 build-master: out/mukube_master.tar 
 
-out/mukube_worker.tar: config-node
+out/mukube_worker.tar: /tmp/boot_script/ config-node
 	./write_config_node.sh build/worker/mukube_init_config config-node
+	./prepare_boot.sh
+	sudo cp -r /tmp/boot_script/* build/worker
 	tar -cvf out/mukube_worker.tar -C build/worker/ . 
 
 build-worker: out/mukube_worker.tar
