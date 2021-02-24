@@ -62,6 +62,9 @@ for ((i=1; i<=$ALL_MASTERS; i++)); do
     then 
         export MASTER_PROXY_STATE=MASTER
         export MASTER_CREATE_CLUSTER=true
+        # Copy the certs to folder
+        mkdir $OUTPUT_DIR_MASTER/etc/kubernetes/pki -p
+        cp -r build/all/certs/* $OUTPUT_DIR_MASTER/etc/kubernetes/pki
     else 
         export MASTER_PROXY_STATE=BACKUP
         export MASTER_CREATE_CLUSTER=false
@@ -79,10 +82,6 @@ for ((i=1; i<=$ALL_MASTERS; i++)); do
 
     # Copy bootscript to folder
     sudo cp -r /tmp/boot_script/* $OUTPUT_DIR_MASTER
-    
-    # Copy the certs to folder
-    mkdir $OUTPUT_DIR_MASTER/etc/kubernetes/pki -p
-    cp -r build/all/certs/* $OUTPUT_DIR_MASTER/etc/kubernetes/pki
 done
 
 mkdir $OUTPUT_DIR/worker

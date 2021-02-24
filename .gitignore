@@ -3,3 +3,4 @@ build/*
 config-all
 config-master
 config-node
+mukube-bootscript/*
