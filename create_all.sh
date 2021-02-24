@@ -57,7 +57,8 @@ export NODE_TYPE=master
 for ((i=1; i<=$ALL_MASTERS; i++)); do
     export MASTER_HOST_IP=${HOSTS[i-1]}
     export MASTER_PROXY_PRIORITY=$(expr 101 - $i)
-    
+    OUTPUT_DIR_MASTER=$OUTPUT_DIR/master/master$i
+
     if [ $i = 1 ]; 
     then 
         export MASTER_PROXY_STATE=MASTER
@@ -69,7 +70,7 @@ for ((i=1; i<=$ALL_MASTERS; i++)); do
         export MASTER_PROXY_STATE=BACKUP
         export MASTER_CREATE_CLUSTER=false
     fi
-    OUTPUT_DIR_MASTER=$OUTPUT_DIR/master/master$i
+    
 
     OUTPUT_PATH_CONF=$OUTPUT_DIR_MASTER/mukube_init_config
     mkdir $OUTPUT_DIR_MASTER -p
@@ -84,6 +85,7 @@ for ((i=1; i<=$ALL_MASTERS; i++)); do
     sudo cp -r /tmp/boot_script/* $OUTPUT_DIR_MASTER
 done
 
+export NODE_TYPE=worker
 mkdir $OUTPUT_DIR/worker
 ./write_config_node.sh $OUTPUT_DIR/worker/mukube_init_config config-all
 
