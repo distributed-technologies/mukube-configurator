@@ -17,4 +17,3 @@ else
     echo "[info] found certificate directory: $MASTER_CERT_DIR"
     cp -r $MASTER_CERT_DIR/* $OUTPUT_DIR
 fi
-

@@ -19,7 +19,6 @@ EOF
 
 VIP_IPS=$MASTER_VIP_CLUSTER_IPS
 
-
 # Fill in haproxy.cfg 
 eval "cat <<EOF
 $(<templates/haproxy.cfg )
@@ -31,7 +30,6 @@ IFS=, read -ra IPS <<< "$VIP_IPS"
 for ((i=0; i<${#IPS[@]}; i++)); do
     echo -e "\t\tserver MASTER_VIP$i ${IPS[i]}:6443 check" >> $1/etc/haproxy/haproxy.cfg
 done
-
 
 # Fill in haproxy.yaml
 eval "cat <<EOF

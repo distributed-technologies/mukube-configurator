@@ -23,7 +23,7 @@ build-master: out/mukube_master.tar
 out/mukube_worker.tar: /tmp/boot_script/ config-node
 	./write_config_node.sh build/worker/mukube_init_config config-node
 	./prepare_boot.sh
-	sudo cp -r /tmp/boot_script/* build/worker
+	sudo cp -r /tmp/boot_script/boot.sh build/worker
 	tar -cvf out/mukube_worker.tar -C build/worker/ . 
 
 build-worker: out/mukube_worker.tar

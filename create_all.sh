@@ -87,5 +87,6 @@ done
 
 export NODE_TYPE=worker
 mkdir $OUTPUT_DIR/worker
+sudo cp -r /tmp/boot_script/boot.sh $OUTPUT_DIR/worker
 ./write_config_node.sh $OUTPUT_DIR/worker/mukube_init_config config-all
 
