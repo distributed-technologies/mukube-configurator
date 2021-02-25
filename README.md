@@ -7,13 +7,13 @@ This is the repository for the configuration of a bare metal high available kube
 ## Structure
 The entry point for the project is the make file in the root folder, which reads a config file for either a single master node, a single worker node or a full cluster setup.
 
-### config-master
+### [config-master](docs/config-master)
 
 
 
-### config-node
+### [config-node](docs/config-node)
 
 
 
-### config-all
+### [config-all](docs/config-all)
 
