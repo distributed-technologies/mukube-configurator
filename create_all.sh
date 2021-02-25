@@ -16,20 +16,6 @@ then
     NODE_JOIN_TOKEN=$(sudo kubeadm token generate)
 fi
 
-re='^[0-9]+$'
-if [ -z "$ALL_MASTERS" ]
-then
-    # Default value is 3
-    echo "[info] ALL_MASTERS not set. Defaulting to 3"
-    ALL_MASTERS=3
-else
-    if ! [[ $ALL_MASTERS =~ $re ]]
-    then
-        echo "[error] $ALL_MASTER not a number"
-        exit 1
-    fi
-fi
-
 if [ -z "$MASTER_NETWORK_INTERFACE" ]
 then
     echo "[error] MASTER_NETWORK_INTERFACE required"
@@ -54,7 +40,7 @@ export NODE_TYPE=master
 # Get the bootscript
 ./prepare_boot.sh
 
-for ((i=1; i<=$ALL_MASTERS; i++)); do
+for ((i=1; i<=${HOSTS[@]}; i++)); do
     export MASTER_HOST_IP=${HOSTS[i-1]}
     export MASTER_PROXY_PRIORITY=$(expr 101 - $i)
     OUTPUT_DIR_MASTER=$OUTPUT_DIR/master/master$i
