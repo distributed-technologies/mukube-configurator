@@ -1,6 +1,7 @@
 #!/bin/bash
-source config-all
 OUTPUT_DIR=$1
+VARIABLES=$2
+source $VARIABLES
 
 #TODO validate with regexp
 if [ -z $MASTER_CERTIFICATE_KEY ]
@@ -38,9 +39,9 @@ export MASTER_TAINT=$MASTER_TAINT
 export NODE_TYPE=master
 
 # Get the bootscript
-./prepare_boot.sh
+./scripts/prepare_boot.sh
 
-for ((i=1; i<=${HOSTS[@]}; i++)); do
+for ((i=1; i<=${#HOSTS[@]}; i++)); do
     export MASTER_HOST_IP=${HOSTS[i-1]}
     export MASTER_PROXY_PRIORITY=$(expr 101 - $i)
     OUTPUT_DIR_MASTER=$OUTPUT_DIR/master/master$i
@@ -51,7 +52,7 @@ for ((i=1; i<=${HOSTS[@]}; i++)); do
         export MASTER_CREATE_CLUSTER=true
         # Copy the certs to folder
         mkdir $OUTPUT_DIR_MASTER/etc/kubernetes/pki -p
-        cp -r build/all/certs/* $OUTPUT_DIR_MASTER/etc/kubernetes/pki
+        cp -r build/cluster/certs/* $OUTPUT_DIR_MASTER/etc/kubernetes/pki
     else 
         export MASTER_PROXY_STATE=BACKUP
         export MASTER_CREATE_CLUSTER=false
@@ -61,11 +62,11 @@ for ((i=1; i<=${HOSTS[@]}; i++)); do
     OUTPUT_PATH_CONF=$OUTPUT_DIR_MASTER/mukube_init_config
     mkdir $OUTPUT_DIR_MASTER -p
 
-    ./write_config_node.sh $OUTPUT_PATH_CONF config-all
-    ./write_config_master.sh $OUTPUT_PATH_CONF config-all
+    ./scripts/prepare_node_config.sh $OUTPUT_PATH_CONF $VARIABLES
+    ./scripts/prepare_master_config.sh $OUTPUT_PATH_CONF $VARIABLES
 
     # Configure Haproxy and keepalived
-    ./prepare_master_HA.sh $OUTPUT_DIR_MASTER
+    ./scripts/prepare_master_HA.sh $OUTPUT_DIR_MASTER templates
 
     # Copy bootscript to folder
     sudo cp -r /tmp/boot_script/* $OUTPUT_DIR_MASTER
@@ -74,5 +75,5 @@ done
 export NODE_TYPE=worker
 mkdir $OUTPUT_DIR/worker
 sudo cp -r /tmp/boot_script/boot.sh $OUTPUT_DIR/worker
-./write_config_node.sh $OUTPUT_DIR/worker/mukube_init_config config-all
+./scripts/prepare_node_config.sh $OUTPUT_DIR/worker/mukube_init_config $VARIABLES
 

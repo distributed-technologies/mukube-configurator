@@ -1,6 +1,6 @@
 out/*
 build/*
-config-all
+config-cluster
 config-master
 config-node
 mukube-bootscript/*

@@ -1,41 +1,41 @@
 
 default:
-	@echo "make build-master,build-worker or build-all"
+	@echo "make build-master,build-worker or build-cluster"
 	
 build/tmp/container-images: requirements.txt
 	rm -rf build/tmp/container-images
-	./pack_container_images.sh build/tmp/container-images
+	./scripts/pack_container_images.sh build/tmp/container-images
 
 out/mukube_master.tar: build/tmp/container-images /tmp/boot_script/ config-master build/master/etc/kubernetes/pki
-	./write_config_node.sh build/master/mukube_init_config config-master
-	./write_config_master.sh build/master/mukube_init_config config-master
-	./prepare_master_HA.sh build/master
-	./prepare_boot.sh
+	./scripts/prepare_node_config.sh build/master/mukube_init_config config-master
+	./scripts/prepare_master_config.sh build/master/mukube_init_config config-master
+	./scripts/prepare_master_HA.sh build/master templates
+	./scripts/prepare_boot.sh
 	sudo cp -r /tmp/boot_script/* build/master
 	tar -cvf out/mukube_master.tar -C build tmp/container-images
 	tar -rf out/mukube_master.tar -C build/master/ .
 	
 build/master/etc/kubernetes/pki: config-master 
-	./prepare_certs_master.sh build/master/etc/kubernetes/pki config-master 
+	./scripts/prepare_master_certs.sh build/master/etc/kubernetes/pki config-master 
 
 build-master: out/mukube_master.tar 
 
 out/mukube_worker.tar: /tmp/boot_script/ config-node
-	./write_config_node.sh build/worker/mukube_init_config config-node
-	./prepare_boot.sh
+	./scripts/prepare_node_config.sh build/worker/mukube_init_config config-node
+	./scripts/prepare_boot.sh
 	sudo cp -r /tmp/boot_script/boot.sh build/worker
 	tar -cvf out/mukube_worker.tar -C build/worker/ . 
 
 build-worker: out/mukube_worker.tar
 
-build/all/certs: config-master 
-	./prepare_certs_master.sh build/all/certs config-all
+build/cluster/certs: config-master 
+	./scripts/prepare_master_certs.sh build/cluster/certs config-cluster
 
-out/all: build/tmp/container-images config-all build/all/certs
-	./create_all.sh build/all
-	./build_all.sh build/all
+out/cluster: build/tmp/container-images config-cluster build/cluster/certs
+	./scripts/prepare_cluster.sh build/cluster config-cluster
+	./scripts/build_cluster.sh build/cluster
 
-build-all:  out/all
+build-cluster:  out/cluster
 	
  	
 .PHONY: clear-build clear-out
@@ -43,7 +43,7 @@ build-all:  out/all
 clear-build:  
 	rm -rf build/worker/*
 	rm -rf build/master/*
-	rm -rf build/all/*
+	rm -rf build/cluster/*
 	
 clear-out:
 	rm -rf out/*

@@ -7,4 +7,4 @@ while read p; do
   sudo ctr image pull "$p"
   sudo ctr image export "$DIR/$i.tar" "$p"
   i=$((i+1))
-done <requirements.txt
+done <../requirements.txt

@@ -10,7 +10,7 @@ echo $2
 if [ -z "$MASTER_CERT_DIR" ]
 then
     echo "[info] MASTER_CERT_DIR not set. Certificates will be generated"
-    kubeadm init phase certs all \
+    kubeadm init phase certs cluster \
         --cert-dir $PWD/$OUTPUT_DIR \
         --control-plane-endpoint $NODE_CONTROL_PLANE_VIP:$NODE_CONTROL_PLANE_PORT
 else
