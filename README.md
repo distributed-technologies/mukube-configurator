@@ -11,7 +11,7 @@ The entry point for the project is the make file in the root folder, which reads
 
 ### [config-node](docs/config-node.md)
 
-### [config-all](docs/config-all.md)
+### [config-cluster](docs/config-cluster.md)
 
 ### requirements.txt
 All container images listed in this file will be downloaded and packed into the tarball. Used for offline setups, so that the images does not need to be pulled when the cluster is bootstrapping.
