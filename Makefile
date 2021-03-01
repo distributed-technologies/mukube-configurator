@@ -21,6 +21,7 @@ build/master/etc/kubernetes/pki: config-master
 build-master: out/mukube_master.tar 
 
 out/mukube_worker.tar: /tmp/boot_script/ config-node
+	mkdir build/worker/ -p
 	./scripts/prepare_node_config.sh build/worker/mukube_init_config config-node
 	./scripts/prepare_boot.sh
 	sudo cp -r /tmp/boot_script/boot.sh build/worker
@@ -36,7 +37,6 @@ out/cluster: build/tmp/container-images config-cluster build/cluster/certs
 	./scripts/build_cluster.sh build/cluster
 
 build-cluster:  out/cluster
-	
  	
 .PHONY: clear-build clear-out
 
