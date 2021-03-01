@@ -7,14 +7,14 @@ source $VARIABLES
 if [ -z $MASTER_CERTIFICATE_KEY ]
 then
     echo "[info] MASTER_CERTIFICATE_KEY not set. Generating new."
-    MASTER_CERTIFICATE_KEY=$(sudo kubeadm certs certificate-key)
+    MASTER_CERTIFICATE_KEY=$(sudo docker run kubeadocker certs certificate-key)
 fi
 
 #TODO validate with regexp
 if [ -z $NODE_JOIN_TOKEN ]
 then
     echo "[info] NODE_JOIN_TOKEN not set. Generating new. "
-    NODE_JOIN_TOKEN=$(sudo kubeadm token generate)
+    NODE_JOIN_TOKEN=$(sudo docker run kubeadocker token generate)
 fi
 
 if [ -z "$MASTER_NETWORK_INTERFACE" ]
