@@ -6,11 +6,11 @@ build/tmp/container-images: requirements.txt
 	rm -rf build/tmp/container-images
 	./scripts/pack_container_images.sh build/tmp/container-images
 
-out/mukube_master.tar: build/tmp/container-images /tmp/boot_script/ config-master build/master/etc/kubernetes/pki
+out/mukube_master.tar: build/tmp/container-images build/tmp/boot config-master build/master/etc/kubernetes/pki
+	mkdir out
 	./scripts/prepare_node_config.sh build/master/mukube_init_config config-master
 	./scripts/prepare_master_config.sh build/master/mukube_init_config config-master
 	./scripts/prepare_master_HA.sh build/master templates
-	./scripts/prepare_boot.sh
 	sudo cp -r /tmp/boot_script/* build/master
 	tar -cvf out/mukube_master.tar -C build tmp/container-images
 	tar -rf out/mukube_master.tar -C build/master/ .
@@ -20,10 +20,13 @@ build/master/etc/kubernetes/pki: config-master
 
 build-master: out/mukube_master.tar 
 
-out/mukube_worker.tar: /tmp/boot_script/ config-node
-	mkdir build/worker/ -p
-	./scripts/prepare_node_config.sh build/worker/mukube_init_config config-node
+build/tmp/boot:
 	./scripts/prepare_boot.sh
+
+out/mukube_worker.tar: build/tmp/boot config-node
+	mkdir build/worker/ -p
+	mkdir out
+	./scripts/prepare_node_config.sh build/worker/mukube_init_config config-node
 	sudo cp -r /tmp/boot_script/boot.sh build/worker
 	tar -cvf out/mukube_worker.tar -C build/worker/ . 
 
