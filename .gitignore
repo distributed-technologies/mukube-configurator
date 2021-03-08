@@ -1,4 +1,4 @@
-out/*
+artifacts/*
 build/*
 config-cluster
 config-master
