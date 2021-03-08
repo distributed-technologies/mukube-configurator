@@ -22,13 +22,6 @@ build-master: artifacts/mukube_master.tar
 ## build-cluster: Build a full cluster of nodes from the config in the 'config-cluster' file.
 build-cluster:  artifacts/cluster
 
-artifacts/mukube_worker.tar: build/tmp/boot/ config-node
-	mkdir build/worker -p
-	./scripts/prepare_node_config.sh build/worker/mukube_init_config config-node
-	./scripts/prepare_boot.sh
-	cp -r build/tmp/boot/boot.sh build/worker
-	tar -cvf artifacts/mukube_worker.tar -C build/worker/ .
-
 build/tmp/container-images: requirements.txt
 	rm -rf build/tmp/container-images
 	./scripts/pack_container_images.sh build/tmp/container-images
