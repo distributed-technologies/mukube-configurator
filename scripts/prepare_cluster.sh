@@ -69,11 +69,11 @@ for ((i=1; i<=${#HOSTS[@]}; i++)); do
     ./scripts/prepare_master_HA.sh $OUTPUT_DIR_MASTER templates
 
     # Copy bootscript to folder
-    cp -r build/master/boot/* $OUTPUT_DIR_MASTER
+    cp -r build/tmp/boot/* $OUTPUT_DIR_MASTER
 done
 
 export NODE_TYPE=worker
 mkdir $OUTPUT_DIR/worker
-cp -r build/master/boot/boot.sh $OUTPUT_DIR/worker
+cp -r build/tmp/boot/boot.sh $OUTPUT_DIR/worker
 ./scripts/prepare_node_config.sh $OUTPUT_DIR/worker/mukube_init_config $VARIABLES
 
