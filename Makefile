@@ -46,8 +46,6 @@ out/mukube_master.tar: build/tmp/container-images build/tmp/boot config-master b
 build/master/etc/kubernetes/pki: config-master 
 	./scripts/prepare_master_certs.sh build/master/etc/kubernetes/pki config-master 
 
- 
-
 build/tmp/boot:
 	./scripts/prepare_boot.sh
 
