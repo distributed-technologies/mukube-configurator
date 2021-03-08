@@ -10,6 +10,8 @@ git checkout bootv1
 cp boot.sh ../build/tmp/boot/
 cp -r k8s-cluster-infrastructure ../build/tmp/boot/
 
+
 cd ..
+sudo chown -R $USER build
 rm -rf mukube-bootscript/
 

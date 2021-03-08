@@ -11,7 +11,8 @@ then
     sudo docker run -v $PWD/$OUTPUT_DIR:/app kubeadocker init phase certs all \
         --cert-dir /app \
         --control-plane-endpoint $NODE_CONTROL_PLANE_VIP:$NODE_CONTROL_PLANE_PORT
+    sudo chown -R $USER build
 else
     echo "[info] found certificate directory: $MASTER_CERT_DIR"
-    cp -r $MASTER_CERT_DIR/* $OUTPUT_DIR
+    cp -r $MASTER_CERT_DIR/* $OUTPUT_DIR  
 fi

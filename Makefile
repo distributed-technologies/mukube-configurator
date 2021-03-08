@@ -7,11 +7,11 @@ build/tmp/container-images: requirements.txt
 	./scripts/pack_container_images.sh build/tmp/container-images
 
 out/mukube_master.tar: build/tmp/container-images build/tmp/boot config-master build/master/etc/kubernetes/pki
-	mkdir out
+	mkdir out -p
 	./scripts/prepare_node_config.sh build/master/mukube_init_config config-master
 	./scripts/prepare_master_config.sh build/master/mukube_init_config config-master
 	./scripts/prepare_master_HA.sh build/master templates
-	sudo cp -r /tmp/boot_script/* build/master
+	cp -r build/tmp/boot/* build/master  
 	tar -cvf out/mukube_master.tar -C build tmp/container-images
 	tar -rf out/mukube_master.tar -C build/master/ .
 	
@@ -25,9 +25,9 @@ build/tmp/boot:
 
 out/mukube_worker.tar: build/tmp/boot config-node
 	mkdir build/worker/ -p
-	mkdir out
+	mkdir out -p
 	./scripts/prepare_node_config.sh build/worker/mukube_init_config config-node
-	sudo cp -r /tmp/boot_script/boot.sh build/worker
+	cp -r build/tmp/boot/boot.sh build/worker
 	tar -cvf out/mukube_worker.tar -C build/worker/ . 
 
 build-worker: out/mukube_worker.tar
