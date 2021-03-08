@@ -22,12 +22,11 @@ build-master: out/mukube_master.tar
 ## build-cluster: Build a full cluster of nodes from the config in the 'config-cluster' file.
 build-cluster:  out/cluster
 
-
-out/mukube_worker.tar: /tmp/boot_script/ config-node
+out/mukube_worker.tar: build/tmp/boot/ config-node
 	mkdir build/worker -p
 	./scripts/prepare_node_config.sh build/worker/mukube_init_config config-node
 	./scripts/prepare_boot.sh
-	sudo cp -r /tmp/boot_script/boot.sh build/worker
+	cp -r build/tmp/boot/boot.sh build/worker
 	tar -cvf out/mukube_worker.tar -C build/worker/ .
 
 build/tmp/container-images: requirements.txt
@@ -35,6 +34,7 @@ build/tmp/container-images: requirements.txt
 	./scripts/pack_container_images.sh build/tmp/container-images
 
 out/mukube_master.tar: build/tmp/container-images build/tmp/boot config-master build/master/etc/kubernetes/pki
+	mkdir build/master/ -p
 	mkdir out -p
 	./scripts/prepare_node_config.sh build/master/mukube_init_config config-master
 	./scripts/prepare_master_config.sh build/master/mukube_init_config config-master
@@ -56,7 +56,6 @@ out/mukube_worker.tar: build/tmp/boot config-node
 	cp -r build/tmp/boot/boot.sh build/worker
 	tar -cvf out/mukube_worker.tar -C build/worker/ . 
 
-
 build/cluster/certs: config-master 
 	./scripts/prepare_master_certs.sh build/cluster/certs config-cluster
 
@@ -64,9 +63,6 @@ out/cluster: build/tmp/container-images config-cluster build/cluster/certs
 	./scripts/prepare_cluster.sh build/cluster config-cluster
 	./scripts/build_cluster.sh build/cluster
 
-
-	
 clean: 
 	rm -rf out
 	rm -rf build
-

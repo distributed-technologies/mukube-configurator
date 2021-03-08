@@ -16,3 +16,9 @@ The entry point for the project is the make file in the root folder, which reads
 ### requirements.txt
 All container images listed in this file will be downloaded and packed into the tarball. Used for offline setups, so that the images does not need to be pulled when the cluster is bootstrapping.
 
+
+### Dependencies
+A user in the docker group
+sudo usermod -aG docker $USER
+docker installed
+

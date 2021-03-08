@@ -1,17 +1,18 @@
 # Fetch the bootscript
 mkdir build/tmp/boot -p
 
+cd build/tmp/
 git clone https://github.com/distributed-technologies/mukube-bootscript.git
 cd mukube-bootscript/
 
 # TODO REMOVE THE DEV BRANCH
 git checkout bootv1
 
-cp boot.sh ../build/tmp/boot/
-cp -r k8s-cluster-infrastructure ../build/tmp/boot/
+cp boot.sh ../boot/boot.sh
 
+# TODO Remove this and pull helm dependenceis instead
+cp -r k8s-cluster-infrastructure boot/
 
 cd ..
-sudo chown -R $USER build
 rm -rf mukube-bootscript/
 
