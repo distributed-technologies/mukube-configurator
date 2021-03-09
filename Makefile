@@ -29,7 +29,7 @@ build/tmp/container-images: requirements.txt
 docker:
 	docker build -t kubeadocker .
 
-artifacts/mukube_master.tar: build/tmp/container-images build/tmp/boot config-master build/master/etc/kubernetes/pki docker
+artifacts/mukube_master.tar: docker build/tmp/container-images build/tmp/boot config-master build/master/etc/kubernetes/pki 
 	mkdir build/master/ -p
 	mkdir artifacts -p
 	./scripts/prepare_node_config.sh build/master/mukube_init_config config-master
