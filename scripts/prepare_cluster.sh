@@ -7,7 +7,7 @@ source $VARIABLES
 if [ -z $MASTER_CERTIFICATE_KEY ]
 then
     echo "[info] MASTER_CERTIFICATE_KEY not set. Generating new."
-    MASTER_CERTIFICATE_KEY=$(docker run kubeadocker certs certificate-key)
+    MASTER_CERTIFICATE_KEY=$(docker run kubeadocker alpha certs certificate-key)
 fi
 
 #TODO validate with regexp

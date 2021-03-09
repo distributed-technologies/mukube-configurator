@@ -12,5 +12,5 @@ for d in $DIR/master/*; do
     i=$((i + 1))
 done
 
-# Pack the one tar for all workre nodes
-tar -cvf artifacts/cluster/mukube_worker.tar -C build/worker .
+# Pack the one tar for all worker nodes
+tar -cvf artifacts/cluster/mukube_worker.tar -C build/cluster/worker .
