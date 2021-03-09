@@ -1,3 +1,4 @@
+#!/bin/bash
 DIR=$1
 
 i=1

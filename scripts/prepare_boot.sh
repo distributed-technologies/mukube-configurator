@@ -1,3 +1,4 @@
+#!/bin/bash
 # Fetch the bootscript
 mkdir build/tmp/boot -p
 
