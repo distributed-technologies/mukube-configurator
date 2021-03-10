@@ -15,7 +15,8 @@ then
         kubeadocker \
         init phase certs all \
         --cert-dir /src \
-        --control-plane-endpoint $NODE_CONTROL_PLANE_VIP:$NODE_CONTROL_PLANE_PORT     
+        --control-plane-endpoint $NODE_CONTROL_PLANE_VIP:$NODE_CONTROL_PLANE_PORT \
+        --apiserver-cert-extra-sans $MASTER_VIP_CLUSTER_IPS
 else
     echo "[info] found certificate directory: $MASTER_CERT_DIR"
     cp -r $MASTER_CERT_DIR/* $OUTPUT_DIR  
