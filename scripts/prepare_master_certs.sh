@@ -8,7 +8,7 @@ source $VARIABLES
 if [ -z "$MASTER_CERT_DIR" ]
 then
     echo "[info] MASTER_CERT_DIR not set. Certificates will be generated"
-    sudo docker run -v $PWD/$OUTPUT_DIR:/app kubeadocker init phase certs all \
+    docker run -v $PWD/$OUTPUT_DIR:/app kubeadocker init phase certs all \
         --cert-dir /app \
         --control-plane-endpoint $NODE_CONTROL_PLANE_VIP:$NODE_CONTROL_PLANE_PORT
 else
