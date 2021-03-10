@@ -7,14 +7,14 @@ source $VARIABLES
 if [ -z $MASTER_CERTIFICATE_KEY ]
 then
     echo "[info] MASTER_CERTIFICATE_KEY not set. Generating new."
-    MASTER_CERTIFICATE_KEY=$(sudo docker run kubeadocker certs certificate-key)
+    MASTER_CERTIFICATE_KEY=$(docker run kubeadocker alpha certs certificate-key)
 fi
 
 #TODO validate with regexp
 if [ -z $NODE_JOIN_TOKEN ]
 then
     echo "[info] NODE_JOIN_TOKEN not set. Generating new. "
-    NODE_JOIN_TOKEN=$(sudo docker run kubeadocker token generate)
+    NODE_JOIN_TOKEN=$(docker run kubeadocker token generate)
 fi
 
 if [ -z "$MASTER_NETWORK_INTERFACE" ]
@@ -69,11 +69,11 @@ for ((i=1; i<=${#HOSTS[@]}; i++)); do
     ./scripts/prepare_master_HA.sh $OUTPUT_DIR_MASTER templates
 
     # Copy bootscript to folder
-    sudo cp -r /tmp/boot_script/* $OUTPUT_DIR_MASTER
+    cp -r build/tmp/boot/* $OUTPUT_DIR_MASTER
 done
 
 export NODE_TYPE=worker
 mkdir $OUTPUT_DIR/worker
-sudo cp -r /tmp/boot_script/boot.sh $OUTPUT_DIR/worker
+cp -r build/tmp/boot/boot.sh $OUTPUT_DIR/worker
 ./scripts/prepare_node_config.sh $OUTPUT_DIR/worker/mukube_init_config $VARIABLES
 
