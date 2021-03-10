@@ -58,17 +58,12 @@ for ((i=1; i<=${#HOSTS[@]}; i++)); do
         export MASTER_CREATE_CLUSTER=false
     fi
     
-
     OUTPUT_PATH_CONF=$OUTPUT_DIR_MASTER/mukube_init_config
     mkdir $OUTPUT_DIR_MASTER -p
 
     ./scripts/prepare_node_config.sh $OUTPUT_PATH_CONF $VARIABLES
     ./scripts/prepare_master_config.sh $OUTPUT_PATH_CONF $VARIABLES
-
-    # Configure Haproxy and keepalived
     ./scripts/prepare_master_HA.sh $OUTPUT_DIR_MASTER templates
-
-    # Copy bootscript to folder
     cp -r build/tmp/boot/* $OUTPUT_DIR_MASTER
 done
 

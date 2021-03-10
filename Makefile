@@ -29,7 +29,7 @@ build/tmp/container-images: requirements.txt
 docker-kubeadm: 
 	docker build -t kubeadocker .
 
-artifacts/mukube_master.tar: docker-kubeadm build/tmp/container-images build/tmp/boot config-master build/master/etc/kubernetes/pki 
+artifacts/mukube_master.tar: config-master docker-kubeadm build/tmp/container-images build/tmp/boot build/tmp/helm-charts build/master/etc/kubernetes/pki 
 	mkdir build/master/ -p
 	mkdir artifacts -p
 	./scripts/prepare_node_config.sh build/master/mukube_init_config config-master
@@ -37,6 +37,7 @@ artifacts/mukube_master.tar: docker-kubeadm build/tmp/container-images build/tmp
 	./scripts/prepare_master_HA.sh build/master templates
 	cp -r build/tmp/boot/* build/master  
 	tar -cvf artifacts/mukube_master.tar -C build tmp/container-images
+	tar -cvf artifacts/mukube_master.tar -C build tmp/helm_charts
 	tar -rf artifacts/mukube_master.tar -C build/master/ .
 	
 build/master/etc/kubernetes/pki: config-master 
@@ -44,6 +45,9 @@ build/master/etc/kubernetes/pki: config-master
 
 build/tmp/boot:
 	./scripts/prepare_boot.sh
+
+build/tmp/helm-charts:
+	./scripts/pack_helm_charts.sh build/tmp/helm-charts
 
 artifacts/mukube_worker.tar: build/tmp/boot config-node
 	mkdir build/worker/ -p
@@ -55,7 +59,7 @@ artifacts/mukube_worker.tar: build/tmp/boot config-node
 build/cluster/certs: config-master 
 	./scripts/prepare_master_certs.sh build/cluster/certs config-cluster
 
-artifacts/cluster: build/tmp/container-images config-cluster build/cluster/certs
+artifacts/cluster: config-cluster build/tmp/container-images build/tmp/helm-charts build/cluster/certs
 	./scripts/prepare_cluster.sh build/cluster config-cluster
 	./scripts/build_cluster.sh build/cluster
 
