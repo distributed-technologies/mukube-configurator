@@ -29,31 +29,28 @@ build/tmp/container-images: requirements.txt
 docker-kubeadm: 
 	docker build -t kubeadocker .
 
-artifacts/mukube_master.tar: config-master docker-kubeadm build/tmp/container-images build/tmp/boot build/tmp/helm-charts build/master/etc/kubernetes/pki 
+artifacts/mukube_master.tar: config-master docker-kubeadm build/tmp/container-images build/tmp/helm-charts build/master/etc/kubernetes/pki 
 	mkdir build/master/ -p
 	mkdir artifacts -p
 	./scripts/prepare_node_config.sh build/master/mukube_init_config config-master
 	./scripts/prepare_master_config.sh build/master/mukube_init_config config-master
 	./scripts/prepare_master_HA.sh build/master templates
-	cp -r build/tmp/boot/* build/master  
+	cp templates/boot.sh build/master  
 	tar -cvf artifacts/mukube_master.tar -C build tmp/container-images
-	tar -cvf artifacts/mukube_master.tar -C build tmp/helm_charts
+	tar -cvf artifacts/mukube_master.tar -C build tmp/helm-charts
 	tar -rf artifacts/mukube_master.tar -C build/master/ .
 	
 build/master/etc/kubernetes/pki: config-master 
 	./scripts/prepare_master_certs.sh build/master/etc/kubernetes/pki config-master 
 
-build/tmp/boot:
-	./scripts/prepare_boot.sh
-
 build/tmp/helm-charts:
 	./scripts/pack_helm_charts.sh build/tmp/helm-charts
 
-artifacts/mukube_worker.tar: build/tmp/boot config-node
+artifacts/mukube_worker.tar: config-node
 	mkdir build/worker/ -p
 	mkdir artifacts -p
 	./scripts/prepare_node_config.sh build/worker/mukube_init_config config-node
-	cp -r build/tmp/boot/boot.sh build/worker
+	cp templates/boot.sh build/worker
 	tar -cvf artifacts/mukube_worker.tar -C build/worker/ . 
 
 build/cluster/certs: config-master 

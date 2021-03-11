@@ -67,6 +67,7 @@ for ((i=1; i<=${#HOSTS[@]}; i++)); do
     cp -r build/tmp/boot/* $OUTPUT_DIR_MASTER
 done
 
+# Prepare the one worker tar for all worker nodes
 export NODE_TYPE=worker
 mkdir $OUTPUT_DIR/worker
 cp -r build/tmp/boot/boot.sh $OUTPUT_DIR/worker
