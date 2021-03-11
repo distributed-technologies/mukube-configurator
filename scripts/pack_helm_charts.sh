@@ -15,6 +15,7 @@ numberOfFiles=$(ls $DIR | wc -l)
 linesInFile=$(grep -w ".*http.*" -c helm_requirements.txt)
 
 if [ $numberOfFiles != $linesInFile ]; then
-    echo "Error in helm charts download"
+    echo "[error] Helm charts download failed. 
+          Numer of files in $DIR:$numberOfFiles does not equal the lines in helm requirements:$linesInFile"
     exit 1
 fi
