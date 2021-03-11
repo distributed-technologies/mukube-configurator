@@ -17,11 +17,12 @@ The entry point for the project is the make file in the root folder, which reads
 All container images listed in this file will be downloaded and packed into the tarball. Used for offline setups, so that the images does not need to be pulled when the cluster is bootstrapping.
 
 ### helm_requirements.txt
-All helm charts repos listed in this file will be downloaded and packed into the tarball. The raets will then be installed by the node that creates the cluster. Each line in the file should contain 3 things, seperated by a space: The url of the repo, the release name and the namespace.
+All helm charts repos listed in this file will be downloaded and packed into the tarball. The charts will then be installed by the node that creates the cluster. Each line in the file should contain 3 things, seperated by a space: The url of the repo, the release name and the namespace.
 
 
 ### Dependencies
 A user in the docker group
-sudo usermod -aG docker $USER
-docker installed
+Use this command to add the current user to docker and reboot.
+`sudo usermod -aG docker $USER`
+
 
