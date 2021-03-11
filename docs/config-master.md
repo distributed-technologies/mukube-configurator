@@ -16,7 +16,7 @@ MASTER_CERT_DIR=
 
 
 #### MASTER_NETWORK_INTERFACE
-The name of the network interface where the devices are discoverable
+The name of the network interface where the devices are discoverable.
 #### MASTER_HOST_IP
 THe ip address of the machine on the local networl
 #### NODE_CONTROL_PLANE_VIP
@@ -36,6 +36,6 @@ Either true or false. If this node should create the cluster.
 #### NODE_JOIN_TOKEN
 A join token to use by other nodes joining the cluster. This is used to establish trust between the control plane and the joining nodes. Make sure the token is still valid.
 #### MASTER_CERTIFICATE_KEY
-A key used to encrypt the certificates
+A key used to encrypt the certificates.
 #### MASTER_CERT_DIR
-Path to the folder that holds the certificates. If left empty, certificates will be generated. 
+Path to the folder that holds the certificates needed by a kubernetes cluster. If left empty, certificates will be generated. 
