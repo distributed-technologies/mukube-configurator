@@ -7,8 +7,9 @@ for d in $DIR/master/*; do
     archive_path=artifacts/cluster/mukube_master$i.tar
     mkdir -p artifacts/cluster/ 
     #Pack the images and the whole i'th master folder
-    tar -cvf $archive_path -C $d .
-    tar -rf $archive_path -C build tmp/
+    tar -cvf $archive_path -C build tmp/container-images
+	tar -cvf $archive_path -C build tmp/helm-charts
+	tar -rf $archive_path -C build/cluster/master/master$i/ .
     i=$((i + 1))
 done
 
