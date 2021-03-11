@@ -39,3 +39,19 @@ A join token to use by other nodes joining the cluster. This is used to establis
 A key used to encrypt the certificates.
 #### MASTER_CERT_DIR
 Path to the folder that holds the certificates needed by a kubernetes cluster. If left empty, certificates will be generated. 
+
+### Example file
+```
+MASTER_NETWORK_INTERFACE=eth0
+MASTER_HOST_IP=192.168.1.100
+NODE_CONTROL_PLANE_VIP=192.168.1.150
+NODE_CONTROL_PLANE_PORT=4200
+MASTER_PROXY_PRIORITY=100
+MASTER_PROXY_STATE=MASTER
+MASTER_TAINT=true
+MASTER_VIP_CLUSTER_IPS=192.168.1.100,192.168.1.101,192.168.1.102
+MASTER_CREATE_CLUSTER=true
+NODE_JOIN_TOKEN=o3rzie.deux2xjelpu5b7r4
+MASTER_CERTIFICATE_KEY=a4f1cedaa91bdc1004dabba7264059f5a4079e6e6b8a12c29968476df8d4ed87
+MASTER_CERT_DIR=
+```

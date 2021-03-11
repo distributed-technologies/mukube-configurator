@@ -33,3 +33,16 @@ A join token to use by other nodes joining the cluster. This is used to establis
 
 #### MASTER_CERTIFICATE_KEY
 A key used to encrypt the certificates.
+
+
+### Example file
+```
+NODE_CONTROL_PLANE_VIP=192.168.1.150
+NODE_CONTROL_PLANE_PORT=4200
+MASTER_TAINT=false
+MASTER_NETWORK_INTERFACE=eth0
+MASTER_VIP_CLUSTER_IPS=192.168.1.100,192.168.1.101,192.168.1.102,
+MASTER_CERT_DIR=
+NODE_JOIN_TOKEN=
+MASTER_CERTIFICATE_KEY=
+```
