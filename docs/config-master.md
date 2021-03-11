@@ -18,7 +18,7 @@ MASTER_CERT_DIR=
 #### MASTER_NETWORK_INTERFACE
 The name of the network interface where the devices are discoverable.
 #### MASTER_HOST_IP
-THe ip address of the machine on the local networl
+The ip address of the machine on the local network.
 #### NODE_CONTROL_PLANE_VIP
 The ip address of the control plane. If the first master node is being configured, this virtual ip will be created. 
 #### NODE_CONTROL_PLANE_PORT
