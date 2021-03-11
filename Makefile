@@ -22,7 +22,7 @@ build-master: artifacts/mukube_master.tar
 ## build-cluster: Build a full cluster of nodes from the config in the 'config-cluster' file.
 build-cluster:  artifacts/cluster
 
-build/tmp/container-images: requirements.txt
+build/tmp/container-images: image_requirements.txt
 	rm -rf build/tmp/container-images
 	./scripts/pack_container_images.sh build/tmp/container-images
 

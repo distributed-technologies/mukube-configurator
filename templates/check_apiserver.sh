@@ -1,7 +1,7 @@
 #!/bin/sh
 
 errorExit() {
-    echo "*** Error happened in check_apiserver.sh: $*" 1>&2
+    echo "*** Error happened in check_apiserver.sh: $INPUT" 1>&2
     exit 1
 }
 

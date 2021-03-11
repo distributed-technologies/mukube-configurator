@@ -38,9 +38,6 @@ export MASTER_NETWORK_INTERFACE=$MASTER_NETWORK_INTERFACE
 export MASTER_TAINT=$MASTER_TAINT
 export NODE_TYPE=master
 
-# Get the bootscript
-./scripts/prepare_boot.sh
-
 for ((i=1; i<=${#HOSTS[@]}; i++)); do
     export MASTER_HOST_IP=${HOSTS[i-1]}
     export MASTER_PROXY_PRIORITY=$(expr 101 - $i)
@@ -64,7 +61,7 @@ for ((i=1; i<=${#HOSTS[@]}; i++)); do
     ./scripts/prepare_node_config.sh $OUTPUT_PATH_CONF $VARIABLES
     ./scripts/prepare_master_config.sh $OUTPUT_PATH_CONF $VARIABLES
     ./scripts/prepare_master_HA.sh $OUTPUT_DIR_MASTER templates
-    cp -r build/tmp/boot/* $OUTPUT_DIR_MASTER
+    cp templates/boot.sh $OUTPUT_DIR_MASTER
 done
 
 # Prepare the one worker tar for all worker nodes

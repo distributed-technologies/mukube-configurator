@@ -14,6 +14,7 @@ mkdir -p $WORKING_DIR/etc/haproxy
 mkdir -p $WORKING_DIR/tmp/ha
 
 # Fill in check_apiserver.sh
+INPUT="\$1"
 eval "cat <<EOF
 $(<$TEMPLATES_DIR/check_apiserver.sh)
 EOF
