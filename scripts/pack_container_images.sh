@@ -8,11 +8,11 @@ while read p; do
   docker pull "$p"
   docker save --output="$DIR/$i.tar" "$p"
   i=$((i+1))
-done <requirements.txt
+done <image_requirements.txt
 
 numberOfFiles=$(ls $DIR | wc -l)
 # Counting non empty lines in requirements file
-linesInFile=$(grep -w ".*[a-z].*" -c requirements.txt)
+linesInFile=$(grep -w ".*[a-z].*" -c image_requirements.txt)
 
 if [ $numberOfFiles != $linesInFile ]; then
     echo "[error] Container image charts download failed. 
