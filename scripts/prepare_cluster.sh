@@ -48,8 +48,8 @@ for ((i=1; i<=${#HOSTS[@]}; i++)); do
         export MASTER_PROXY_STATE=MASTER
         export MASTER_CREATE_CLUSTER=true
         # Copy the certs to folder
-        mkdir $OUTPUT_DIR_MASTER/etc/kubernetes/pki -p
-        cp -r build/cluster/certs/* $OUTPUT_DIR_MASTER/etc/kubernetes/pki
+        #mkdir $OUTPUT_DIR_MASTER/etc/kubernetes/pki -p
+        #cp -r build/cluster/certs/* $OUTPUT_DIR_MASTER/etc/kubernetes/pki
     else 
         export MASTER_PROXY_STATE=BACKUP
         export MASTER_CREATE_CLUSTER=false
@@ -67,6 +67,6 @@ done
 # Prepare the one worker tar for all worker nodes
 export NODE_TYPE=worker
 mkdir $OUTPUT_DIR/worker
-cp -r build/tmp/boot/boot.sh $OUTPUT_DIR/worker
+cp templates/boot.sh $OUTPUT_DIR/worker
 ./scripts/prepare_node_config.sh $OUTPUT_DIR/worker/mukube_init_config $VARIABLES
 
