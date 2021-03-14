@@ -1,2 +1,2 @@
 https://github.com/distributed-technologies/mukube-vnet/releases/download/v0.1.1/default.mukube-vnet-v0.1.1.tgz vnet kube-system
-https://github.com/distributed-technologies/mukube-loadbalancer/releases/download/v0.1.0/default.mukube-loadbalancer-v0.1.1.tgz loadbalancer metallb-system
+https://github.com/distributed-technologies/mukube-loadbalancer/releases/download/v0.1.1/default.mukube-loadbalancer-v0.1.1.tgz loadbalancer metallb-system
