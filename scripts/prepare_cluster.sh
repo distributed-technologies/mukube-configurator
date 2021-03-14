@@ -47,9 +47,6 @@ for ((i=1; i<=${#HOSTS[@]}; i++)); do
     then 
         export MASTER_PROXY_STATE=MASTER
         export MASTER_CREATE_CLUSTER=true
-        # Copy the certs to folder
-        #mkdir $OUTPUT_DIR_MASTER/etc/kubernetes/pki -p
-        #cp -r build/cluster/certs/* $OUTPUT_DIR_MASTER/etc/kubernetes/pki
     else 
         export MASTER_PROXY_STATE=BACKUP
         export MASTER_CREATE_CLUSTER=false

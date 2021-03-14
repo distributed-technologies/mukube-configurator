@@ -25,9 +25,6 @@ The name of the network interface where the devices are discoverable.
 #### MASTER_VIP_CLUSTER_IPS
 A list of comma sepperated ips of all the other master nodes.
 
-#### MASTER_CERT_DIR
-Path to the folder that holds the certificates needed by a kubernetes cluster. If left empty, certificates will be generated. 
-
 #### NODE_JOIN_TOKEN
 A join token to use by other nodes joining the cluster. This is used to establish trust between the control plane and the joining nodes. Make sure the token is still valid.
 
@@ -42,7 +39,6 @@ NODE_CONTROL_PLANE_PORT=4200
 MASTER_TAINT=false
 MASTER_NETWORK_INTERFACE=eth0
 MASTER_VIP_CLUSTER_IPS=192.168.1.100,192.168.1.101,192.168.1.102,
-MASTER_CERT_DIR=
 NODE_JOIN_TOKEN=
 MASTER_CERTIFICATE_KEY=
 ```
