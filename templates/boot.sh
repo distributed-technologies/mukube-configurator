@@ -22,7 +22,7 @@ case $NODE_TYPE in
                 echo "CREATING CLUSTER"
                 printf "Bootstrapping virtual ip setup"
                 sudo mv /tmp/ha/* /etc/kubernetes/manifests
-                init="kubeadm init --control-plane-endpoint $NODE_CONTROL_PLANE_VIP:$NODE_CONTROL_PLANE_PORT --upload-certs --token $NODE_JOIN_TOKEN --certificate-key $MASTER_CERTIFICATE_KEY --skip-phases=certs" 
+                init="kubeadm init --control-plane-endpoint $NODE_CONTROL_PLANE_VIP:$NODE_CONTROL_PLANE_PORT --upload-certs --token $NODE_JOIN_TOKEN --certificate-key $MASTER_CERTIFICATE_KEY" 
                 printf "Creating cluster with command: \n\n\t $init \n\n"
                 sudo $init
                 ;;
