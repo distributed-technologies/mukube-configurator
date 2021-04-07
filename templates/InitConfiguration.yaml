@@ -4,7 +4,7 @@ bootstrapTokens:
 - groups:
   - system:bootstrappers:kubeadm:default-node-token
   token: ${NODE_JOIN_TOKEN}
-  ttl: 0 #Token will never expire TODO
+  ttl: 24h #Token will never expire TODO
   usages:
   - signing
   - authentication

@@ -8,7 +8,7 @@ case $NODE_TYPE in
     "master")
         echo "MASTER NODE SETUP"
         # Import all the container image tarballs into containerd local registry
-        for FILE in /tmp/container-images/*; do
+        for FILE in /root/container-images/*; do
           sudo ctr image import $FILE
         done
 	    DIR="/etc/kubernetes/manifests/"
@@ -21,7 +21,7 @@ case $NODE_TYPE in
             "true")
                 echo "CREATING CLUSTER"
                 printf "Bootstrapping virtual ip setup"
-                sudo mv /tmp/ha/* /etc/kubernetes/manifests
+                sudo mv /root/ha/* /etc/kubernetes/manifests
                 init="kubeadm init --config /etc/kubernetes/InitConfiguration.yaml --upload-certs" 
                 printf "Creating cluster with command: \n\n\t $init \n\n"
                 sudo $init
@@ -61,14 +61,14 @@ case $NODE_TYPE in
         if [ $MASTER_CREATE_CLUSTER = "true" ]
         then
             printf "Setting up infrastructure\n"
-            for FILE in /tmp/helm-charts/*; do
+            for FILE in /root/helm-charts/*; do
                 release=$(echo $FILE | cut -f4 -d/ | cut -f1 -d#)
                 namespace=$(echo $FILE | cut -f4 -d/ | cut -f2 -d#)
                 helm install $release $FILE -n $namespace --create-namespace
             done
         else
             printf "Joining virtual ip setup"
-            sudo mv /tmp/ha/* /etc/kubernetes/manifests
+            sudo mv /root/ha/* /etc/kubernetes/manifests
         fi
         ;;
     "worker")

@@ -11,7 +11,7 @@ export APISERVER_VIP=$NODE_CONTROL_PLANE_VIP
 
 mkdir -p $WORKING_DIR/etc/keepalived
 mkdir -p $WORKING_DIR/etc/haproxy
-mkdir -p $WORKING_DIR/tmp/ha
+mkdir -p $WORKING_DIR/root/ha
 
 # Fill in check_apiserver.sh
 INPUT="\$1"
@@ -38,13 +38,13 @@ done
 eval "cat <<EOF
 $(<$TEMPLATES_DIR/haproxy.yaml)
 EOF
-" > $1/tmp/ha/haproxy.yaml
+" > $1/root/ha/haproxy.yaml
 
 # Fill in keepalived.yaml
 eval "cat <<EOF
 $(<$TEMPLATES_DIR/keepalived.yaml)
 EOF
-" > $WORKING_DIR/tmp/ha/keepalived.yaml
+" > $WORKING_DIR/root/ha/keepalived.yaml
 
 export STATE=$MASTER_PROXY_STATE
 export INTERFACE=$MASTER_NETWORK_INTERFACE
