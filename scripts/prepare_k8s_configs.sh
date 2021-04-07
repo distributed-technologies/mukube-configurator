@@ -28,9 +28,4 @@ EOF
 " > $OUTPUT_DIR/InitConfiguration.yaml
 
 
-eval "cat <<EOF
-$(<$TEMPLATES_DIR/KubeletConfiguration.yaml )
-EOF
-" > $OUTPUT_DIR/KubeletConfiguration.yaml
-
 
