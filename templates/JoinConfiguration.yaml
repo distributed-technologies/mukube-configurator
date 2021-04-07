@@ -3,11 +3,9 @@ caCertPath: /etc/kubernetes/pki/ca.crt
 discovery:
   bootstrapToken:
     apiServerEndpoint: kube-apiserver:6443
-    token: abcdef.0123456789abcdef
+    token: ${NODE_JOIN_TOKEN}
     unsafeSkipCAVerification: true # Remove when we handle certificates TODO
-  timeout: 5m0s
-  tlsBootstrapToken: abcdef.0123456789abcdef
 kind: JoinConfiguration
 nodeRegistration:
   criSocket: unix:///run/containerd/containerd.sock
-  taints: null
+  ${NODE_REGISTRATION}
