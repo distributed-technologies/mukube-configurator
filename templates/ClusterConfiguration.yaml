@@ -1,0 +1,19 @@
+apiVersion: kubeadm.k8s.io/v1beta2
+imageRepository: k8s.gcr.io
+kind: ClusterConfiguration
+clusterName: kubernetes
+certificatesDir: /etc/kubernetes/pki
+kubernetesVersion: v1.20.0 # TODO inject version
+networking:
+  dnsDomain: cluster.local
+  serviceSubnet: 10.96.0.0/12
+dns:
+  type: CoreDNS
+scheduler: {}
+apiServer:
+  timeoutForControlPlane: 4m0s
+controllerManager: {}
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+controlPlaneEndpoint: ${NODE_CONTROL_PLANE_VIP}:${NODE_CONTROL_PLANE_PORT}
