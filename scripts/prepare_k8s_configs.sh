@@ -30,8 +30,11 @@ $(<$TEMPLATES_DIR/ClusterConfiguration.yaml )
 EOF
 " > $OUTPUT_DIR/InitConfiguration.yaml
 else
-export NODE_REGISTRATION="controlPlane: 
-    certificateKey: $MASTER_CERTIFICATE_KEY"
+export CONTROL_PLANE_REGISTRATION="controlPlane: 
+    certificateKey: $MASTER_CERTIFICATE_KEY
+    localAPIEndpoint:
+      advertiseAddress: ${MASTER_HOST_IP}
+      bindPort: 6443"
 eval "cat <<EOF
 $(<$TEMPLATES_DIR/JoinConfiguration.yaml )
 ---

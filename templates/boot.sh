@@ -27,8 +27,7 @@ case $NODE_TYPE in
                 ;;
             "false")
                 echo "JOINING CLUSTER"
-                # TODO remove unsafe verification by configuring certificates
-                init="kubeadm join $NODE_CONTROL_PLANE_VIP:$NODE_CONTROL_PLANE_PORT --token $NODE_JOIN_TOKEN --discovery-token-unsafe-skip-ca-verification --control-plane --certificate-key $MASTER_CERTIFICATE_KEY --v=5"
+                init="kubeadm join --config /etc/kubernetes/JoinConfiguration.yaml"
                 printf "Joining cluster with command: \n\n\t $init \n\n"
                 sudo $init
                 ;;

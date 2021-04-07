@@ -8,4 +8,4 @@ discovery:
 kind: JoinConfiguration
 nodeRegistration:
   criSocket: unix:///run/containerd/containerd.sock
-  ${NODE_REGISTRATION}
+${CONTROL_PLANE_REGISTRATION}

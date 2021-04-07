@@ -12,7 +12,6 @@ kind: InitConfiguration
 localAPIEndpoint:
   advertiseAddress: ${MASTER_HOST_IP}
   bindPort: 6443
-
 certificateKey: ${MASTER_CERTIFICATE_KEY}
 nodeRegistration:
   criSocket: unix:///run/containerd/containerd.sock
