@@ -12,9 +12,10 @@ kind: InitConfiguration
 localAPIEndpoint:
   advertiseAddress: ${MASTER_HOST_IP}
   bindPort: 6443
-kubeletExtraArgs:
-    cgroup-driver: "systemd"
+
 certificateKey: ${MASTER_CERTIFICATE_KEY}
 nodeRegistration:
   criSocket: unix:///run/containerd/containerd.sock
+  kubeletExtraArgs:
+    cgroup-driver: "systemd"
   ${TAINT_MASTER_YAML}

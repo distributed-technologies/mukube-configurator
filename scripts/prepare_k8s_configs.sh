@@ -31,8 +31,7 @@ EOF
 " > $OUTPUT_DIR/InitConfiguration.yaml
 else
 export NODE_REGISTRATION="controlPlane: 
-    certificateKey: $MASTER_CERTIFICATE_KEY
-"
+    certificateKey: $MASTER_CERTIFICATE_KEY"
 eval "cat <<EOF
 $(<$TEMPLATES_DIR/JoinConfiguration.yaml )
 ---
