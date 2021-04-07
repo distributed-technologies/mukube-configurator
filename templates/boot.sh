@@ -2,34 +2,33 @@
 
 # Load all the variables from the config.yaml file to variables
 source mukube_init_config
-
 case $NODE_TYPE in
     "master")
         echo "MASTER NODE SETUP"
         # Import all the container image tarballs into containerd local registry
         for FILE in /root/container-images/*; do
-          sudo ctr image import $FILE
+          ctr image import $FILE
         done
 	    DIR="/etc/kubernetes/manifests/"
         if [ -d "$DIR" ]; then
             echo "$DIR exists"
         else 
-            sudo mkdir $DIR
+            mkdir $DIR
         fi                        	
         case $MASTER_CREATE_CLUSTER in
             "true")
                 echo "CREATING CLUSTER"
                 printf "Bootstrapping virtual ip setup"
-                sudo mv /root/ha/* /etc/kubernetes/manifests
+                mv /root/ha/* /etc/kubernetes/manifests
                 init="kubeadm init --config /etc/kubernetes/InitConfiguration.yaml --upload-certs" 
                 printf "Creating cluster with command: \n\n\t $init \n\n"
-                sudo $init
+                $init
                 ;;
             "false")
                 echo "JOINING CLUSTER"
                 init="kubeadm join --config /etc/kubernetes/JoinConfiguration.yaml"
                 printf "Joining cluster with command: \n\n\t $init \n\n"
-                sudo $init
+                $init
                 ;;
             *)
                 echo "'create_cluster' variable not set. Exiting"
@@ -39,23 +38,10 @@ case $NODE_TYPE in
         # Set the kubectl config for the user.
         echo "Copying config to user space"
         mkdir -p $HOME/.kube
-        sudo rm $HOME/.kube/config
-        sudo cp -if /etc/kubernetes/admin.conf $HOME/.kube/config
-        sudo chown $(id -u):$(id -g) $HOME/.kube/config
+        rm $HOME/.kube/config
+        cp -if /etc/kubernetes/admin.conf $HOME/.kube/config
+        chown $(id -u):$(id -g) $HOME/.kube/config
 
-        case $MASTER_TAINT in
-            "true")
-                echo "Master is tainted by default. Doing nothing"
-                ;;
-            "false")
-                echo "Untainting master node"
-                kubectl taint nodes --all node-role.kubernetes.io/master-
-                ;;
-            *)
-                echo "'taint_master' variable not set. Exiting"
-                exit 1
-                ;;
-        esac
         if [ $MASTER_CREATE_CLUSTER = "true" ]
         then
             printf "Setting up infrastructure\n"
@@ -66,7 +52,7 @@ case $NODE_TYPE in
             done
         else
             printf "Joining virtual ip setup"
-            sudo mv /root/ha/* /etc/kubernetes/manifests
+            mv /root/ha/* /etc/kubernetes/manifests
         fi
         ;;
     "worker")
@@ -74,7 +60,7 @@ case $NODE_TYPE in
         # TODO remove unsafe verification by configuring certificates
         init="kubeadm join $NODE_CONTROL_PLANE_VIP:$NODE_CONTROL_PLANE_PORT --discovery-token-unsafe-skip-ca-verification --token $NODE_JOIN_TOKEN --v=5"
         printf "Creating cluster with command: \n\n\t $init \n\n"
-        sudo $init
+        $init
         ;;
     *)
         echo "'node_type' variable not set. Exiting"
