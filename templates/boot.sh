@@ -1,5 +1,4 @@
 #!/bin/bash 
-sudo swapoff -a
 
 # Load all the variables from the config.yaml file to variables
 source mukube_init_config
