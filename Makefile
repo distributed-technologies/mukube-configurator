@@ -22,14 +22,8 @@ build-master: artifacts/mukube_master.tar
 ## build-cluster: Build a full cluster of nodes from the config in the 'config-cluster' file.
 build-cluster:  artifacts/cluster
 
-<<<<<<< HEAD
-build/root/container-images: image_requirements.txt
-	rm -rf build/root/container-images
-	./scripts/pack_container_images.sh build/root/container-images
-=======
->>>>>>> skovbakke-patch-1
 
-CONTAINER_DIR = build/tmp/container-images
+CONTAINER_DIR = build/root/container-images
 CONTAINER_IMAGES =
 
 # The pull and save recipe template is created for each image in the image_requirements.txt file
@@ -55,11 +49,7 @@ $(CONTAINER_DIR)/.create :
 docker-kubeadm: 
 	docker build -t kubeadocker - < Dockerfile
 
-<<<<<<< HEAD
-artifacts/mukube_master.tar: config-master docker-kubeadm build/root/container-images build/root/helm-charts 
-=======
-artifacts/mukube_master.tar: config-master docker-kubeadm pull-container-images build/tmp/helm-charts 
->>>>>>> skovbakke-patch-1
+artifacts/mukube_master.tar: config-master docker-kubeadm pull-container-images build/root/helm-charts 
 	mkdir build/master/ -p
 	mkdir artifacts -p
 	./scripts/prepare_node_config.sh build/master/mukube_init_config config-master
@@ -79,11 +69,7 @@ artifacts/mukube_worker.tar: config-node
 	cp templates/boot.sh build/worker
 	tar -cvf artifacts/mukube_worker.tar -C build/worker/ . 
 
-<<<<<<< HEAD
-artifacts/cluster: config-cluster build/root/container-images build/root/helm-charts 
-=======
-artifacts/cluster: config-cluster pull-container-images build/tmp/helm-charts 
->>>>>>> skovbakke-patch-1
+artifacts/cluster: config-cluster pull-container-images build/root/helm-charts 
 	./scripts/prepare_cluster.sh build/cluster config-cluster
 	./scripts/build_cluster.sh build/cluster
 
