@@ -18,7 +18,7 @@ export TAINT_MASTER_YAML="taints:
   - effect: NoSchedule
     key: node-role.kubernetes.io/master"
 else 
-export TAINT_MASTER_YAML="taints: null"
+export TAINT_MASTER_YAML="taints: []"
 fi
 
 if [ $MASTER_CREATE_CLUSTER == "true" ]
@@ -43,7 +43,7 @@ EOF
 " > $OUTPUT_DIR/JoinConfiguration.yaml
 fi
 else
-export NODE_REGISTRATION="taints: null"
+export NODE_REGISTRATION="taints: []"
 
 eval "cat <<EOF
 $(<$TEMPLATES_DIR/JoinConfiguration.yaml )

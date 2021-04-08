@@ -2,10 +2,14 @@ apiVersion: kubeadm.k8s.io/v1beta2
 caCertPath: /etc/kubernetes/pki/ca.crt
 discovery:
   bootstrapToken:
-    apiServerEndpoint: kube-apiserver:6443
+    apiServerEndpoint: ${NODE_CONTROL_PLANE_VIP}:${NODE_CONTROL_PLANE_PORT}
     token: ${NODE_JOIN_TOKEN}
     unsafeSkipCAVerification: true # Remove when we handle certificates TODO
 kind: JoinConfiguration
 nodeRegistration:
+  name: ${NODE_NAME}
+  kubeletExtraArgs:
+    cgroup-driver: "systemd"
   criSocket: unix:///run/containerd/containerd.sock
+  ${TAINT_MASTER_YAML}
 ${CONTROL_PLANE_REGISTRATION}
