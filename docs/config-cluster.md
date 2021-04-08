@@ -23,7 +23,10 @@ Either true or false. If this master node should be tainted, meaning that no pod
 The name of the network interface where the devices are discoverable.
 
 #### MASTER_VIP_CLUSTER_IPS
-A list of comma sepperated ips of all the other master nodes.
+A comma separated list of ips of all the master nodes.
+
+### WORKER_IPS 
+A comma separated list of ips of all the worker nodes.
 
 #### NODE_JOIN_TOKEN
 A join token to use by other nodes joining the cluster. This is used to establish trust between the control plane and the joining nodes. Make sure the token is still valid.
@@ -39,5 +42,6 @@ NODE_CONTROL_PLANE_PORT=4200
 MASTER_TAINT=false
 NODE_NETWORK_INTERFACE=eth0
 MASTER_VIP_CLUSTER_IPS=192.168.1.100,192.168.1.101,192.168.1.102,
+WORKER_IPS=192.168.1.110,192.168.1.111
 NODE_GATEWAY_IP=192.168.1.1
 ```
