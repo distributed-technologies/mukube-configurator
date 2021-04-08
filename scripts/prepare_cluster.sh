@@ -47,6 +47,7 @@ export NODE_TYPE=master
 
 for ((i=1; i<=${#HOSTS[@]}; i++)); do
     export NODE_HOST_IP=${HOSTS[i-1]}
+    export NODE_NAME=master$i
     export MASTER_PROXY_PRIORITY=$(expr 101 - $i)
     OUTPUT_DIR_MASTER=$OUTPUT_DIR/master/master$i
 
@@ -77,6 +78,7 @@ IFS=, read -ra WORKERS <<< "$WORKER_IPS"
 export NODE_TYPE=worker
 for ((i=1; i<=${#WORKERS[@]}; i++)); do
     export NODE_HOST_IP=${WORKERS[i-1]}
+    export NODE_NAME=worker$i
 
     OUTPUT_DIR_WORKER=$OUTPUT_DIR/worker/worker$i
     mkdir -p $OUTPUT_DIR_WORKER

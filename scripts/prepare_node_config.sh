@@ -24,6 +24,12 @@ then
     NODE_TYPE=worker
 fi
 
+if [ -z "$NODE_NAME" ]
+then
+    echo "[error] $NODE_NAME required"
+    exit 1
+fi
+
 echo "NODE_TYPE=$NODE_TYPE" > $CONFIG_OUTPUT_FILE
 echo "NODE_CONTROL_PLANE_VIP=$NODE_CONTROL_PLANE_VIP" >> $CONFIG_OUTPUT_FILE
 echo "NODE_CONTROL_PLANE_PORT=$NODE_CONTROL_PLANE_PORT" >> $CONFIG_OUTPUT_FILE

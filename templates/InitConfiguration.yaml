@@ -14,6 +14,7 @@ localAPIEndpoint:
   bindPort: 6443
 certificateKey: ${MASTER_CERTIFICATE_KEY}
 nodeRegistration:
+  name: ${NODE_NAME}
   criSocket: unix:///run/containerd/containerd.sock
   kubeletExtraArgs:
     cgroup-driver: "systemd"
