@@ -1,0 +1,10 @@
+[Match]
+Name=${NODE_NETWORK_INTERFACE}
+
+[Network]
+Address=${NODE_HOST_IP}
+Gateway=${NODE_GATEWAY_IP}
+LinkLocalAddressing=no
+
+[DHCP]
+ClientIdentifier=mac

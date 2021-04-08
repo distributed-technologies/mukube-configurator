@@ -17,9 +17,9 @@ then
     NODE_JOIN_TOKEN=$(docker run kubeadocker token generate)
 fi
 
-if [ -z "$MASTER_NETWORK_INTERFACE" ]
+if [ -z "$NODE_NETWORK_INTERFACE" ]
 then
-    echo "[error] MASTER_NETWORK_INTERFACE required"
+    echo "[error] NODE_NETWORK_INTERFACE required"
     exit 1
 fi
 
@@ -34,12 +34,12 @@ IFS=, read -ra HOSTS <<< "$MASTER_VIP_CLUSTER_IPS"
 # Export all variables for script scope
 export NODE_JOIN_TOKEN=$NODE_JOIN_TOKEN
 export MASTER_CERTIFICATE_KEY=$MASTER_CERTIFICATE_KEY
-export MASTER_NETWORK_INTERFACE=$MASTER_NETWORK_INTERFACE
+export NODE_NETWORK_INTERFACE=$NODE_NETWORK_INTERFACE
 export MASTER_TAINT=$MASTER_TAINT
 export NODE_TYPE=master
 
 for ((i=1; i<=${#HOSTS[@]}; i++)); do
-    export MASTER_HOST_IP=${HOSTS[i-1]}
+    export NODE_HOST_IP=${HOSTS[i-1]}
     export MASTER_PROXY_PRIORITY=$(expr 101 - $i)
     OUTPUT_DIR_MASTER=$OUTPUT_DIR/master/master$i
 

@@ -10,7 +10,7 @@ bootstrapTokens:
   - authentication
 kind: InitConfiguration
 localAPIEndpoint:
-  advertiseAddress: ${MASTER_HOST_IP}
+  advertiseAddress: ${NODE_HOST_IP}
   bindPort: 6443
 certificateKey: ${MASTER_CERTIFICATE_KEY}
 nodeRegistration:
