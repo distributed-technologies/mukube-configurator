@@ -40,7 +40,7 @@ $(foreach I,$(shell cat image_requirements.txt),$(eval $(call PULL_AND_SAVE_IMAG
 
 ## pull-container-images: Pull and save all container images in image_requirements.txt
 .PHONY : pull-container-images
-pull-container-images : $(CONTAINER_IMAGES)
+pull-container-images : $(CONTAINER_DIR)/.create $(CONTAINER_IMAGES)
 $(CONTAINER_DIR)/.create :
 	mkdir -p $(@D)
 	touch $@
