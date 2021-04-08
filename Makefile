@@ -29,6 +29,7 @@ CONTAINER_IMAGES =
 # The pull and save recipe template is created for each image in the image_requirements.txt file
 # This way images are pulled and saved only once. Every recipe is added to the CONTAINER_IMAGES list
 # which lists all dependencies for the container-images target.
+# We sanitize the image filenames replacing / and : with . 
 define PULL_AND_SAVE_IMAGE
 CONTAINER_IMAGES += $(CONTAINER_DIR)/$(subst :,.,$(subst /,.,$1)).tar
 $(CONTAINER_DIR)/$(subst :,.,$(subst /,.,$1)).tar :
