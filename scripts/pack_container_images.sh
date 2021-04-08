@@ -3,12 +3,11 @@ DIR=$1
 # Remake the directory to update timestamp
 rm -rf $DIR
 mkdir $DIR -p
-i=1
-while read p; do
-  docker pull "$p"
-  docker save --output="$DIR/$i.tar" "$p"
-  i=$((i+1))
-done <image_requirements.txt
+
+while read image; do
+  docker pull "$image"
+  docker save --output="$DIR/${image//\//_}.tar" "$image"
+done < image_requirements.txt
 
 numberOfFiles=$(ls $DIR | wc -l)
 # Counting non empty lines in requirements file
