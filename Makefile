@@ -32,7 +32,7 @@ CONTAINER_IMAGES =
 # We sanitize the image filenames replacing / and : with . 
 define PULL_AND_SAVE_IMAGE
 CONTAINER_IMAGES += $(CONTAINER_DIR)/$(subst :,.,$(subst /,.,$1)).tar
-$(CONTAINER_DIR)/$(subst :,.,$(subst /,.,$1)).tar : $(CONTAINER_DIR)
+$(CONTAINER_DIR)/$(subst :,.,$(subst /,.,$1)).tar : $(CONTAINER_DIR)/.create
 	docker pull $1 && docker save -o $$@ $1
 endef
 
@@ -41,8 +41,9 @@ $(foreach I,$(shell cat image_requirements.txt),$(eval $(call PULL_AND_SAVE_IMAG
 ## pull-container-images: Pull and save all container images in image_requirements.txt
 .PHONY : pull-container-images
 pull-container-images : $(CONTAINER_IMAGES)
-$(CONTAINER_DIR) :
-	mkdir -p $@
+$(CONTAINER_DIR)/.create :
+	mkdir -p $(@D)
+	touch $@
 
 .PHONY : docker-kubeadm
 docker-kubeadm: 
