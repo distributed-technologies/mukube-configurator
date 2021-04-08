@@ -6,7 +6,7 @@ mkdir $DIR -p
 
 while read image; do
   docker pull "$image"
-  docker save --output="$DIR/${image//\//_}.tar" "$image"
+  docker save --output="$DIR/${image//\//\\}.tar" "$image"
 done < image_requirements.txt
 
 numberOfFiles=$(ls $DIR | wc -l)
