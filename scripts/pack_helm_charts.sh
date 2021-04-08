@@ -1,7 +1,7 @@
 #!/bin/bash
 DIR=$1
 mkdir $DIR -p
-cat helm_requirements.txt |grep -w ".*http.*"   | while read p; do
+cat helm_requirements.txt | grep -w ".*http.*"   | while read p; do
   echo $p
   url=$(echo $p | cut -f1 -d' ')
   release=$(echo $p | cut -f2 -d' ')

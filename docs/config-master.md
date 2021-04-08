@@ -22,7 +22,7 @@ The ip address of the machine on the local network.
 #### NODE_CONTROL_PLANE_VIP
 The ip address of the control plane. If the first master node is being configured, this virtual ip will be created. 
 #### NODE_CONTROL_PLANE_PORT
-The port where the control plane should listens on. 
+The port the control plane listens on. 
 #### MASTER_PROXY_PRIORITY
 To configure the HAProxy a priority is needed. The first master should have the highest value and the rest should have decresingly unique values. This value determins which node should get the VIP of the control plane if the current node fails.
 #### MASTER_PROXY_STATE
