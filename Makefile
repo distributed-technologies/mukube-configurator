@@ -44,9 +44,9 @@ pull-container-images : $(CONTAINER_DIR) $(CONTAINER_IMAGES)
 $(CONTAINER_DIR) :
 	mkdir -p $@
 
-
+.PHONY : docker-kubeadm
 docker-kubeadm: 
-	docker build -t kubeadocker .
+	docker build -t kubeadocker - < Dockerfile
 
 artifacts/mukube_master.tar: config-master docker-kubeadm pull-container-images build/tmp/helm-charts 
 	mkdir build/master/ -p
