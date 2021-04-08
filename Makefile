@@ -22,14 +22,32 @@ build-master: artifacts/mukube_master.tar
 ## build-cluster: Build a full cluster of nodes from the config in the 'config-cluster' file.
 build-cluster:  artifacts/cluster
 
-build/tmp/container-images: image_requirements.txt
-	rm -rf build/tmp/container-images
-	./scripts/pack_container_images.sh build/tmp/container-images
+
+CONTAINER_DIR = build/tmp/container-images
+CONTAINER_IMAGES =
+
+# The pull and save recipe template is created for each image in the image_requirements.txt file
+# This way images are pulled and saved only once. Every recipe is added to the CONTAINER_IMAGES list
+# which lists all dependencies for the container-images target.
+define PULL_AND_SAVE_IMAGE
+CONTAINER_IMAGES += $(CONTAINER_DIR)/$(subst :,.,$(subst /,.,$1)).tar
+$(CONTAINER_DIR)/$(subst :,.,$(subst /,.,$1)).tar :
+	docker pull $1 && docker save -o $$@ $1
+endef
+
+$(foreach I,$(shell cat image_requirements.txt),$(eval $(call PULL_AND_SAVE_IMAGE,$I)))
+
+## pull-container-images: Pull and save all container images in image_requirements.txt
+.PHONY : pull-container-images
+pull-container-images : $(CONTAINER_DIR) $(CONTAINER_IMAGES)
+$(CONTAINER_DIR) :
+	mkdir -p $@
+
 
 docker-kubeadm: 
 	docker build -t kubeadocker .
 
-artifacts/mukube_master.tar: config-master docker-kubeadm build/tmp/container-images build/tmp/helm-charts 
+artifacts/mukube_master.tar: config-master docker-kubeadm pull-container-images build/tmp/helm-charts 
 	mkdir build/master/ -p
 	mkdir artifacts -p
 	./scripts/prepare_node_config.sh build/master/mukube_init_config config-master
@@ -49,7 +67,7 @@ artifacts/mukube_worker.tar: config-node
 	cp templates/boot.sh build/worker
 	tar -cvf artifacts/mukube_worker.tar -C build/worker/ . 
 
-artifacts/cluster: config-cluster build/tmp/container-images build/tmp/helm-charts 
+artifacts/cluster: config-cluster pull-container-images build/tmp/helm-charts 
 	./scripts/prepare_cluster.sh build/cluster config-cluster
 	./scripts/build_cluster.sh build/cluster
 
