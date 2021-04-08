@@ -67,4 +67,5 @@ export NODE_TYPE=worker
 mkdir $OUTPUT_DIR/worker
 cp templates/boot.sh $OUTPUT_DIR/worker
 ./scripts/prepare_node_config.sh $OUTPUT_DIR/worker/mukube_init_config $VARIABLES
+./scripts/prepare_k8s_configs.sh $OUTPUT_DIR/worker templates
 

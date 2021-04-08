@@ -37,10 +37,7 @@ case $NODE_TYPE in
         esac
         # Set the kubectl config for the user.
         echo "Copying config to user space"
-        mkdir -p $HOME/.kube
-        rm $HOME/.kube/config
-        cp -if /etc/kubernetes/admin.conf $HOME/.kube/config
-        chown $(id -u):$(id -g) $HOME/.kube/config
+        export KUBECONFIG=/etc/kubernetes/admin.conf
 
         if [ $MASTER_CREATE_CLUSTER = "true" ]
         then
