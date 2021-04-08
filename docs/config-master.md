@@ -1,7 +1,7 @@
 Configuration for what is needed to set up a master node that is part of a highly available control plane. Placed in the `config-master` file in the root of the project.
 ```
-MASTER_NETWORK_INTERFACE=
-MASTER_HOST_IP=
+NODE_NETWORK_INTERFACE=
+NODE_HOST_IP=
 NODE_CONTROL_PLANE_VIP=
 NODE_CONTROL_PLANE_PORT=
 MASTER_PROXY_PRIORITY=
@@ -15,9 +15,9 @@ MASTER_CERT_DIR=
 ```
 
 
-#### MASTER_NETWORK_INTERFACE
+#### NODE_NETWORK_INTERFACE
 The name of the network interface where the devices are discoverable.
-#### MASTER_HOST_IP
+#### NODE_HOST_IP
 The ip address of the machine on the local network.
 #### NODE_CONTROL_PLANE_VIP
 The ip address of the control plane. If the first master node is being configured, this virtual ip will be created. 
@@ -40,8 +40,8 @@ A key used to encrypt the certificates.
 
 ### Example file
 ```
-MASTER_NETWORK_INTERFACE=eth0
-MASTER_HOST_IP=192.168.1.100
+NODE_NETWORK_INTERFACE=eth0
+NODE_HOST_IP=192.168.1.100
 NODE_CONTROL_PLANE_VIP=192.168.1.150
 NODE_CONTROL_PLANE_PORT=4200
 MASTER_PROXY_PRIORITY=100

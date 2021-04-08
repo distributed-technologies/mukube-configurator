@@ -28,6 +28,12 @@ then
     echo "[error] MASTER_VIP_CLUSTER_IPS required"
     exit 1
 fi
+
+if [ -z "$NODE_GATEWAY_IP" ]
+then
+    echo "[error] NODE_GATEWAY_IP required"
+    exit 1
+fi
 # MAKE HOST_IP list
 IFS=, read -ra HOSTS <<< "$MASTER_VIP_CLUSTER_IPS"
 
@@ -36,6 +42,7 @@ export NODE_JOIN_TOKEN=$NODE_JOIN_TOKEN
 export MASTER_CERTIFICATE_KEY=$MASTER_CERTIFICATE_KEY
 export NODE_NETWORK_INTERFACE=$NODE_NETWORK_INTERFACE
 export MASTER_TAINT=$MASTER_TAINT
+export NODE_GATEWAY_IP=$NODE_GATEWAY_IP
 export NODE_TYPE=master
 
 for ((i=1; i<=${#HOSTS[@]}; i++)); do
@@ -55,6 +62,7 @@ for ((i=1; i<=${#HOSTS[@]}; i++)); do
     OUTPUT_PATH_CONF=$OUTPUT_DIR_MASTER/mukube_init_config
     mkdir $OUTPUT_DIR_MASTER -p
 
+    ./scripts/prepare_systemd_network.sh $OUTPUT_DIR_MASTER templates
     ./scripts/prepare_node_config.sh $OUTPUT_PATH_CONF $VARIABLES
     ./scripts/prepare_master_config.sh $OUTPUT_PATH_CONF $VARIABLES
     ./scripts/prepare_master_HA.sh $OUTPUT_DIR_MASTER templates
@@ -62,10 +70,19 @@ for ((i=1; i<=${#HOSTS[@]}; i++)); do
     cp templates/boot.sh $OUTPUT_DIR_MASTER
 done
 
-# Prepare the one worker tar for all worker nodes
-export NODE_TYPE=worker
-mkdir $OUTPUT_DIR/worker
-cp templates/boot.sh $OUTPUT_DIR/worker
-./scripts/prepare_node_config.sh $OUTPUT_DIR/worker/mukube_init_config $VARIABLES
-./scripts/prepare_k8s_configs.sh $OUTPUT_DIR/worker templates
+# MAKE HOST_IP list
+IFS=, read -ra WORKERS <<< "$WORKER_IPS"
 
+# Prepare the worker nodes
+export NODE_TYPE=worker
+for ((i=1; i<=${#WORKERS[@]}; i++)); do
+    export NODE_HOST_IP=${WORKERS[i-1]}
+
+    OUTPUT_DIR_WORKER=$OUTPUT_DIR/worker/worker$i
+    mkdir -p $OUTPUT_DIR_WORKER
+
+    cp templates/boot.sh $OUTPUT_DIR_WORKER
+    ./scripts/prepare_systemd_network.sh $OUTPUT_DIR_WORKER templates
+    ./scripts/prepare_node_config.sh $OUTPUT_DIR_WORKER/mukube_init_config $VARIABLES
+    ./scripts/prepare_k8s_configs.sh $OUTPUT_DIR_WORKER templates
+done    

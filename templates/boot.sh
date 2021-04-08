@@ -55,7 +55,7 @@ case $NODE_TYPE in
     "worker")
         echo "WORKER NODE SETUP"
         # TODO remove unsafe verification by configuring certificates
-        init="kubeadm join $NODE_CONTROL_PLANE_VIP:$NODE_CONTROL_PLANE_PORT --discovery-token-unsafe-skip-ca-verification --token $NODE_JOIN_TOKEN --v=5"
+        init="kubeadm join --config /etc/kubernetes/JoinConfiguration.yaml"
         printf "Creating cluster with command: \n\n\t $init \n\n"
         $init
         ;;
