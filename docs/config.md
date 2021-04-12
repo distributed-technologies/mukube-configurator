@@ -1,4 +1,4 @@
-Configuration for what is needed to set up a HA that is part of a highly available control plane. Placed in the `config-cluster` file in the root of the project.
+Configuration for what is needed to set up a HA that is part of a highly available control plane. Placed in the `config` file in the root of the project.
 ```
 NODE_CONTROL_PLANE_VIP=
 NODE_CONTROL_PLANE_PORT=
@@ -33,7 +33,6 @@ A join token to use by other nodes joining the cluster. This is used to establis
 
 #### MASTER_CERTIFICATE_KEY
 A key used to encrypt the certificates.
-
 
 ### Example file
 ```

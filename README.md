@@ -7,7 +7,7 @@ This is the repository for the configuration of a bare metal high available kube
 ## Structure
 The entry point for the project is the make file in the root folder, which reads a config file for a full cluster setup.
 
-### [config-cluster](docs/config-cluster.md)
+### [config](docs/config.md)
 
 ### image_requirements.txt
 All container images listed in this file will be downloaded and packed into the tarball. Used for offline setups, so that the images does not need to be pulled when the cluster is bootstrapping.

@@ -1,5 +1,5 @@
-default: config-cluster pull-container-images build/root/helm-charts 
-	./scripts/prepare_cluster.sh build/cluster config-cluster
+default: config pull-container-images build/root/helm-charts 
+	./scripts/prepare_cluster.sh build/cluster config
 	./scripts/build_cluster.sh build/cluster
 
 
