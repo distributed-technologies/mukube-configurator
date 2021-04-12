@@ -63,8 +63,8 @@ for ((i=1; i<=${#HOSTS[@]}; i++)); do
     OUTPUT_PATH_CONF=$OUTPUT_DIR_MASTER/mukube_init_config
     mkdir $OUTPUT_DIR_MASTER -p
 
-    ./scripts/prepare_systemd_network.sh $OUTPUT_DIR_MASTER templates
     ./scripts/prepare_master_config.sh $OUTPUT_PATH_CONF $VARIABLES
+    ./scripts/prepare_systemd_network.sh $OUTPUT_DIR_MASTER templates
     ./scripts/prepare_master_HA.sh $OUTPUT_DIR_MASTER templates
     ./scripts/prepare_k8s_configs.sh $OUTPUT_DIR_MASTER templates
     cp templates/boot.sh $OUTPUT_DIR_MASTER
@@ -83,7 +83,7 @@ for ((i=1; i<=${#WORKERS[@]}; i++)); do
     mkdir -p $OUTPUT_DIR_WORKER
 
     cp templates/boot.sh $OUTPUT_DIR_WORKER
-    ./scripts/prepare_systemd_network.sh $OUTPUT_DIR_WORKER templates
     ./scripts/prepare_node_config.sh $OUTPUT_DIR_WORKER/mukube_init_config $VARIABLES
+    ./scripts/prepare_systemd_network.sh $OUTPUT_DIR_WORKER templates
     ./scripts/prepare_k8s_configs.sh $OUTPUT_DIR_WORKER templates
 done    

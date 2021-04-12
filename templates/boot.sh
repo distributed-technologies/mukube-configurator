@@ -8,13 +8,7 @@ case $NODE_TYPE in
         # Import all the container image tarballs into containerd local registry
         for FILE in /root/container-images/*; do
           ctr image import $FILE
-        done
-	    DIR="/etc/kubernetes/manifests/"
-        if [ -d "$DIR" ]; then
-            echo "$DIR exists"
-        else 
-            mkdir $DIR
-        fi                        	
+        done                       	
         case $MASTER_CREATE_CLUSTER in
             "true")
                 echo "CREATING CLUSTER"
