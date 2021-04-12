@@ -64,7 +64,6 @@ for ((i=1; i<=${#HOSTS[@]}; i++)); do
     mkdir $OUTPUT_DIR_MASTER -p
 
     ./scripts/prepare_systemd_network.sh $OUTPUT_DIR_MASTER templates
-    ./scripts/prepare_node_config.sh $OUTPUT_PATH_CONF $VARIABLES
     ./scripts/prepare_master_config.sh $OUTPUT_PATH_CONF $VARIABLES
     ./scripts/prepare_master_HA.sh $OUTPUT_DIR_MASTER templates
     ./scripts/prepare_k8s_configs.sh $OUTPUT_DIR_MASTER templates

@@ -50,7 +50,7 @@ export STATE=$MASTER_PROXY_STATE
 export INTERFACE=$NODE_NETWORK_INTERFACE
 export ROUTER_ID=51 # Default value
 export PRIORITY=$MASTER_PROXY_PRIORITY
-export AUTH_PASS=42
+export AUTH_PASS=42 # Default value
 
 # Fill in keepalived.conf
 eval "cat <<EOF

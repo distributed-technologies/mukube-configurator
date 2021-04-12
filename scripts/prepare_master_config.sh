@@ -4,6 +4,9 @@ VARIABLES=$2
 
 source $VARIABLES
 
+# A master node has the same configuration as a normal node and more.
+./scripts/prepare_node_config.sh $CONFIG_OUTPUT_FILE $VARIABLES
+
 if [ -z "$MASTER_TAINT" ];
 then
     # Default value is true
