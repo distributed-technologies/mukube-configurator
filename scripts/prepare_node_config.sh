@@ -17,6 +17,7 @@ fi
 if [ -z $NODE_JOIN_TOKEN ]
 then
     echo "[error] NODE_JOIN_TOKEN required."
+    exit 1
 fi
 
 if [ -z $NODE_TYPE ]
