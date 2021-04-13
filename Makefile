@@ -28,7 +28,7 @@ $(CONTAINER_DIR)/.create :
 	mkdir -p $(@D)
 	touch $@
 
-
+## docker-kubeadm: build the kubeadocker image used to generate join_tokens and certificates
 .PHONY : docker-kubeadm
 docker-kubeadm: 
 	docker build -t kubeadocker - < Dockerfile
@@ -37,7 +37,7 @@ docker-kubeadm:
 build/root/helm-charts:
 	./scripts/pack_helm_charts.sh build/root/helm-charts
 
-
+## clean: remove output from the build
 clean: 
 	rm -rf artifacts
 	rm -rf build
