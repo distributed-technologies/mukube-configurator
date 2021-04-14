@@ -2,6 +2,7 @@
 
 # Load all the variables from the config.yaml file to variables
 source mukube_init_config
+hostnamectl set-hostname $NODE_NAME
 case $NODE_TYPE in
     "master")
         echo "MASTER NODE SETUP"
