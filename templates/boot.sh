@@ -13,6 +13,7 @@ case $NODE_TYPE in
             "true")
                 echo "CREATING CLUSTER"
                 printf "Bootstrapping virtual ip setup"
+                mkdir -p /etc/kubernetes/manifests
                 mv /root/ha/* /etc/kubernetes/manifests
                 init="kubeadm init --config /etc/kubernetes/InitConfiguration.yaml --upload-certs" 
                 printf "Creating cluster with command: \n\n\t $init \n\n"
