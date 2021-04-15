@@ -1,4 +1,4 @@
-default: config docker-kubeadm pull-container-images build/root/helm-charts 
+default: config docker-kubeadm pull-container-images update-yggdrasil build/root/helm-charts 
 	./scripts/prepare_cluster.sh build/cluster config
 	./scripts/build_cluster.sh build/cluster
 
@@ -33,8 +33,11 @@ $(CONTAINER_DIR)/.create :
 docker-kubeadm: 
 	docker build -t kubeadocker - < Dockerfile
 
+.PHONY : update-yggdrasil
+update-yggdrasil : 
+	./scripts/yggdrasil_update_to_latest.sh
 
-build/root/helm-charts:
+build/root/helm-charts: helm_requirements.txt
 	./scripts/pack_helm_charts.sh build/root/helm-charts
 
 ## clean: remove output from the build

@@ -1,1 +1,0 @@
-https://github.com/distributed-technologies/yggdrasil/releases/download/v0.2.0/argo-chart-v0.2.0.tgz nidhogg-workflow nidhogg
