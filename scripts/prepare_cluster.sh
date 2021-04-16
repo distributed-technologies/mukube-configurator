@@ -51,15 +51,15 @@ for ((i=1; i<=${#HOSTS[@]}; i++)); do
     export MASTER_PROXY_PRIORITY=$(expr 101 - $i)
     OUTPUT_DIR_MASTER=$OUTPUT_DIR/master/master$i
 
-    if [ $i = 1 ]; 
-    then 
+    if [ $i = 1 ];
+    then
         export MASTER_PROXY_STATE=MASTER
         export MASTER_CREATE_CLUSTER=true
-    else 
+    else
         export MASTER_PROXY_STATE=BACKUP
         export MASTER_CREATE_CLUSTER=false
     fi
-    
+
     OUTPUT_PATH_CONF=$OUTPUT_DIR_MASTER/mukube_init_config
     mkdir $OUTPUT_DIR_MASTER -p
 
@@ -86,4 +86,4 @@ for ((i=1; i<=${#WORKERS[@]}; i++)); do
     ./scripts/prepare_node_config.sh $OUTPUT_DIR_WORKER/mukube_init_config $VARIABLES
     ./scripts/prepare_systemd_network.sh $OUTPUT_DIR_WORKER templates
     ./scripts/prepare_k8s_configs.sh $OUTPUT_DIR_WORKER templates
-done    
+done
