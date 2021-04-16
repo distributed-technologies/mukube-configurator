@@ -1,9 +1,9 @@
-default: config docker-kubeadm pull-container-images update-yggdrasil build/root/helm-charts 
+default: config docker-kubeadm pull-container-images build/root/helm-charts
 	./scripts/prepare_cluster.sh build/cluster config
 	./scripts/build_cluster.sh build/cluster
 
 
-help: 
+help:
 	@fgrep -h "##" $(MAKEFILE_LIST) | fgrep -v fgrep | sed -e 's/\\$$//' | sed -e 's/##//'
 
 CONTAINER_DIR = build/root/container-images
@@ -12,7 +12,7 @@ CONTAINER_IMAGES =
 # The pull and save recipe template is created for each image in the image_requirements.txt file
 # This way images are pulled and saved only once. Every recipe is added to the CONTAINER_IMAGES list
 # which lists all dependencies for the container-images target.
-# We sanitize the image filenames replacing / and : with . 
+# We sanitize the image filenames replacing / and : with .
 define PULL_AND_SAVE_IMAGE
 CONTAINER_IMAGES += $(CONTAINER_DIR)/$(subst :,.,$(subst /,.,$1)).tar
 $(CONTAINER_DIR)/$(subst :,.,$(subst /,.,$1)).tar : $(CONTAINER_DIR)/.create
@@ -30,17 +30,13 @@ $(CONTAINER_DIR)/.create :
 
 ## docker-kubeadm: build the kubeadocker image used to generate join_tokens and certificates
 .PHONY : docker-kubeadm
-docker-kubeadm: 
+docker-kubeadm:
 	docker build -t kubeadocker - < Dockerfile
-
-.PHONY : update-yggdrasil
-update-yggdrasil : 
-	./scripts/yggdrasil_update_to_latest.sh
 
 build/root/helm-charts: helm_requirements.txt
 	./scripts/pack_helm_charts.sh build/root/helm-charts
 
 ## clean: remove output from the build
-clean: 
+clean:
 	rm -rf artifacts
 	rm -rf build
