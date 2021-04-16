@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 
 # Load all the variables from the config.yaml file to variables
 source mukube_init_config
@@ -9,7 +9,7 @@ case $NODE_TYPE in
         # Import all the container image tarballs into containerd local registry
         for FILE in /root/container-images/*; do
           ctr image import $FILE
-        done                       	
+        done
         case $MASTER_CREATE_CLUSTER in
             "true")
                 echo "CREATING CLUSTER"
@@ -41,7 +41,7 @@ case $NODE_TYPE in
             for FILE in /root/helm-charts/*; do
                 release=$(echo $FILE | cut -f4 -d/ | cut -f1 -d#)
                 namespace=$(echo $FILE | cut -f4 -d/ | cut -f2 -d#)
-                helm install $release $FILE -n $namespace --create-namespace
+                helm install --create-namespace -n $namespace $release $FILE
             done
         else
             printf "Joining virtual ip setup"
