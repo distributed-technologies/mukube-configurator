@@ -1,0 +1,1 @@
+https://github.com/distributed-technologies/yggdrasil/releases/download/v0.3.2/argo-chart-v0.3.2.tgz nidhogg yggdrasil

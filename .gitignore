@@ -2,4 +2,3 @@ artifacts/*
 build/*
 config
 mukube-bootscript/*
-helm_requirements.txt
