@@ -27,7 +27,7 @@ The name of the network interface where the devices are discoverable.
 A comma separated list of ips of all the master nodes.
 
 #### CLUSTER_ID
-The id of the kubernetes cluster. Much be a unique number from 0 to 255 for the cluster, if more clusters are in the same subnet.
+The id of the kubernetes cluster. Must be a unique number from 0 to 255 for the cluster, if more clusters are in the same subnet.
 Used to setup and maintain a virtual ip for the control plane using Keepalived.
 
 ### WORKER_IPS 
