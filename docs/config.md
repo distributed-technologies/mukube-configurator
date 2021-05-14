@@ -5,6 +5,7 @@ NODE_CONTROL_PLANE_PORT=
 MASTER_TAINT=
 NODE_NETWORK_INTERFACE=
 MASTER_VIP_CLUSTER_IPS=
+CLUSTER_ID=
 MASTER_CERT_DIR=
 NODE_JOIN_TOKEN=
 MASTER_CERTIFICATE_KEY=
@@ -24,6 +25,10 @@ The name of the network interface where the devices are discoverable.
 
 #### MASTER_VIP_CLUSTER_IPS
 A comma separated list of ips of all the master nodes.
+
+#### CLUSTER_ID
+The id of the kubernetes cluster. Much be a unique number from 0 to 255 for the cluster, if more clusters are in the same subnet.
+Used to setup and maintain a virtual ip for the control plane using Keepalived.
 
 ### WORKER_IPS 
 A comma separated list of ips of all the worker nodes.
