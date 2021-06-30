@@ -31,6 +31,8 @@ case $NODE_TYPE in
         echo "Bootstrapping virtual ip setup"
         mkdir -p /etc/kubernetes/manifests
         mv /root/ha/* /etc/kubernetes/manifests
+        # Create port forward untill haproxy takes over
+        iptables -t nat -A OUTPUT -o + -p tcp -d $NODE_CONTROL_PLANE_VIP --dport $NODE_CONTROL_PLANE_PORT -j DNAT --to $NODE_HOST_IP:6443
         init="kubeadm init --v=5 --config /etc/kubernetes/InitConfiguration.yaml --upload-certs" 
         printf "Creating cluster with command: \n\n\t $init \n\n"
         $init
@@ -55,6 +57,8 @@ case $NODE_TYPE in
             namespace=$(echo $FILE | cut -f4 -d/ | cut -f2 -d#)
             helm install --create-namespace -n $namespace $release $FILE
         done
+        # Remove the iptables port forward as haproxy takes over
+        iptables -t nat -D OUTPUT -d $NODE_CONTROL_PLANE_VIP/32 -p tcp -m tcp --dport $NODE_CONTROL_PLANE_PORT -j DNAT --to-destination $NODE_HOST_IP:6443
         ;;&
     master-join)
         echo "Joining virtual ip setup"
